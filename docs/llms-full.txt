@@ -1,0 +1,470 @@
+# FOOD LINE — full product specifications
+
+Source: https://www.allfoodmach.com/  ·  Updated 2026-11-06  ·  Contact WhatsApp +86 183 3929 5069
+
+## Multi-Lane 4-Side Seal Powder Sachet Packing Machine
+URL: https://www.allfoodmach.com/products/multi-lane-4-side-seal-powder-packing-machine/
+Models: FL-M500 / FL-M700 / FL-M980
+
+Packs milk powder, coffee, protein, seasoning and medicinal powders into flat four-side-sealed sachets on 2 to 16 lanes at once — 25–40 sachets per lane per minute.
+
+Applications: Milk powder, flour, seasoning powder, medicinal powder, protein powder, coffee powder, solid drinks, matcha, glucose, desiccant powder.
+
+Features:
+- Whole machine in food-grade 304 stainless steel, designed to GMP production standards.
+- Film-offset correction system keeps every lane tracking straight for stable bag making.
+- Servo motor film pulling gives firmer seals and neater finished sachets.
+- Touch-screen HMI, Chinese/English by default; other languages available on request.
+- Film-break detection with automatic alarm and stop, plus roll-film alignment and splicing device.
+- Brand-name electrical components and PLC control for high speed and easy maintenance.
+- Straight cut, zig-zag cut or continuous (chain) cut, with optional tear notch.
+
+| Spec | FL-M500 | FL-M700 | FL-M980 |
+|---|---|---|---|
+| Lanes | 2–4 | 3–10 | 4–16 |
+| Bag width | 50–125 mm | 50–125 mm | 50–125 mm |
+| Bag length | 45–160 mm | 45–160 mm | 45–160 mm |
+| Max film width | 500 mm | 700 mm | 980 mm |
+| Sealing type | 4-side seal | 4-side seal | 4-side seal |
+| Packing speed | 25–40 cuts/min per lane | 25–40 cuts/min per lane | 25–40 cuts/min per lane |
+| Dosing | Long screw / short screw / short screw with cup | Long screw / short screw / short screw with cup | Long screw / short screw / short screw with cup |
+| Cutting | Straight / zig-zag / continuous | Straight / zig-zag / continuous | Straight / zig-zag / continuous |
+| Power supply | 220 V 50 Hz 2.8 kW | 220 V 50 Hz 4.1 kW | 220 V 50 Hz 5.5 kW |
+| Dimensions (L×W×H) | 1617×1400×2880 mm | 1785×1670×2960 mm | 1950×1900×3100 mm |
+| Weight | ≈900 kg | ≈1000 kg | ≈1200 kg |
+
+Options: Also available in 3-side seal and back-seal (stick) versions, and in granule (volumetric cup) and liquid/paste (piston or ceramic pump) versions. Options: date coder, tear notch, hanging hole, dust extraction, nitrogen flushing, automatic counting and boxing line.
+
+FAQ:
+- Q: How many sachets per minute can a multi-lane machine produce?
+  A: Each lane runs 25–40 cuts per minute, so output = lanes × speed. A 4-lane FL-M500 makes about 100–160 sachets/min; a 10-lane FL-M700 about 250–400; a 16-lane FL-M980 up to about 640 sachets/min, depending on the powder and the fill weight.
+- Q: Which powders can be dosed accurately?
+  A: Free-flowing and non-free-flowing powders such as milk powder, coffee, protein, flour, seasoning and medicinal powder. Auger (screw) dosing is used; a stirrer and screw size are matched to your powder's flowability and fill weight. Send us a sample for a free test.
+- Q: What is the difference between 4-side seal, 3-side seal and back seal?
+  A: 4-side seal gives a flat square sachet sealed on all four edges (premium look, common for seasoning and medicine); 3-side seal is similar with one fold edge; back seal (stick pack) has a long vertical seam and is typical for coffee, sugar and supplement sticks.
+- Q: What film should I use?
+  A: Heat-sealable laminated film such as PET/PE, PET/AL/PE, OPP/CPP or paper/PE. Film thickness and the maximum film width depend on the model (500, 700 or 980 mm).
+
+## Multi-Lane Stick Pack Machine (Back Seal)
+URL: https://www.allfoodmach.com/products/multi-lane-stick-pack-machine/
+Models: FL-S300 / FL-S600 / FL-S900
+
+Back-seal stick packs for instant coffee, sugar, milk tea, electrolyte and protein powders, granules, honey and liquid — 2 to 16 lanes, 20–40 sticks per lane per minute.
+
+Applications: Instant coffee, 3-in-1 coffee, sugar, milk tea, solid drinks, collagen, probiotic powder, electrolyte powder, granules, honey, jam, sauces, oral liquid.
+
+Features:
+- Food-grade 304 stainless steel contact parts, GMP-compliant design.
+- Servo film pulling with film-offset correction for consistent stick length.
+- Dosing matched to product: screw for powder, volumetric cup for granules, piston/ceramic pump for liquids and paste.
+- Straight, zig-zag, round-corner or die-cut cutting.
+- Film-break alarm with automatic stop; PLC + touch screen.
+
+| Spec | FL-S300 | FL-S600 | FL-S900 |
+|---|---|---|---|
+| Lanes | 2–4 | 3–10 | 4–16 |
+| Stick width | 20–70 mm | 20–95 mm | 20–105 mm |
+| Stick length | 50–180 mm | 50–180 mm | 50–180 mm |
+| Max film width | 300 mm | 600 mm | 900 mm |
+| Sealing type | Back seal (stick) | Back seal (stick) | Back seal (stick) |
+| Packing speed | 20–40 cuts/min per lane | 20–40 cuts/min per lane | 20–40 cuts/min per lane |
+| Dosing | Long screw / short screw / short screw with cup | Long screw / short screw / short screw with cup | Long screw / short screw / short screw with cup |
+| Cutting | Straight / zig-zag / round corner / die-cut | Straight / zig-zag / round corner / die-cut | Straight / zig-zag / round corner / die-cut |
+| Power supply | 220 V 50 Hz 3.5 kW | 220 V 50 Hz 5.5 kW | 220 V 50 Hz 7.5 kW |
+| Dimensions (L×W×H) | 1900×1440×3130 mm | 1860×1750×3200 mm | 1860×2050×3300 mm |
+| Weight | ≈900 kg | ≈1200 kg | ≈1500 kg |
+
+Options: Liquid/paste version with piston or ceramic pumps and optional heating/mixing hopper; granule version with volumetric cups; downstream counting and boxing line.
+
+FAQ:
+- Q: What fill weight can a stick pack machine handle?
+  A: Typical stick packs hold 1–50 g (or ml). The fill range depends on stick width and length; tell us your target weight and stick size and we will select the screw, cup or pump.
+- Q: Can one machine pack both powder and liquid?
+  A: No — the dosing system differs. Powder uses auger screws, granules use volumetric cups and liquids use pumps. The bag-forming mainframe is the same, so we configure the doser for your product.
+- Q: How many operators are needed?
+  A: One operator can run the machine: loading film, refilling the hopper (or using an automatic feeder) and checking output.
+
+## Single-Lane Small Sachet Powder Packing Machine
+URL: https://www.allfoodmach.com/products/single-lane-sachet-powder-packing-machine/
+Models: FL-240B / FL-240T / FL-240Q
+
+A compact, affordable sachet machine for 5–100 g of powder in back-seal, 3-side-seal or 4-side-seal bags — ideal for start-ups and small batches.
+
+Applications: Seasoning, spice powder, milk powder, coffee, medicine powder, protein, flour, starch.
+
+Features:
+- Short-screw auger dosing for accurate small doses.
+- Choice of back seal, 3-side seal or 4-side seal bag styles.
+- Straight, zig-zag, round-corner or die-cut.
+- 220 V or 380 V, 50/60 Hz — works in most countries without a transformer.
+- Small footprint, easy changeover, low investment.
+
+| Spec | FL-240B (back seal) | FL-240T (3-side) | FL-240Q (4-side) |
+|---|---|---|---|
+| Sealing type | Back seal | 3-side seal | 4-side seal |
+| Dosing | Short screw (auger) | Short screw (auger) | Short screw (auger) |
+| Packing range | 5–100 g | 5–100 g | 5–100 g |
+| Packing speed | 25–40 bags/min | 25–40 bags/min | 25–40 bags/min |
+| Bag size | L 45–160, W 30–115 mm | L 45–160, W 30–120 mm | L 45–160, W 30–120 mm |
+| Film width / thickness | Max 240 mm / 0.05–0.1 mm | Max 240 mm / 0.05–0.1 mm | Max 240 mm / 0.05–0.1 mm |
+| Cutting | Straight / zig-zag / round corner / die-cut | Straight / zig-zag / round corner / die-cut | Straight / zig-zag / round corner / die-cut |
+| Power | 220/380 V, 50/60 Hz, 1350 W | 220/380 V, 50/60 Hz, 1350 W | 220/380 V, 50/60 Hz, 1350 W |
+| Air | 0.8 MPa, 0.8 m³/min | 0.8 MPa, 0.8 m³/min | 0.8 MPa, 0.8 m³/min |
+| Dimensions | 900×800×1800 mm | 900×800×1800 mm | 900×800×1800 mm |
+| Weight | 180 kg | 180 kg | 180 kg |
+
+Options: Liquid (single-lane pump) and granule (single-lane cup filler) versions are available on the same frame.
+
+FAQ:
+- Q: Is a single-lane machine enough for my output?
+  A: At 25–40 bags/min one machine produces roughly 12,000–19,000 sachets per 8-hour shift. If you need more, a 2–4 lane machine multiplies output with one operator.
+- Q: Does it need compressed air?
+  A: Yes, 0.8 MPa air at about 0.8 m³/min. We can supply a matched screw air compressor.
+
+## Vertical Packing Machine with Multihead Weigher
+URL: https://www.allfoodmach.com/products/vffs-multihead-weigher-packing-machine/
+Models: FL-420W / FL-620W / FL-820W
+
+A complete weigh-and-bag line for chips, puffed snacks, nuts, candy, dried fruit, frozen dumplings and pet food: Z-type elevator → multihead weigher → VFFS bagger → output conveyor.
+
+Applications: Potato chips, puffed food, peanuts, sunflower seeds, nuts, candy, jelly, dried fruit, biscuits, frozen dumplings and meatballs, pet food, hardware, small parts.
+
+Features:
+- Multihead combination weigher (10 or 14 heads) gives high accuracy on irregular products.
+- Bag styles: pillow (back seal), gusset, block-bottom, stand-up, hanging hole, linked bags.
+- Servo film transport, PLC + touch screen, recipe memory.
+- No product – no bag; no film – alarm.
+- Options: nitrogen flushing, date coder, gusset device, punch hole, check weigher, metal detector.
+
+| Spec | FL-420W | FL-620W | FL-820W |
+|---|---|---|---|
+| Packing speed | 30–70 bags/min | 20–60 bags/min | 20–50 bags/min |
+| Bag size | L 80–200, W 80–300 mm | L 80–400, W 150–300 mm | L 80–600, W 150–400 mm |
+| Roll film width | ≤420 mm | ≤620 mm | ≤820 mm |
+| Packing weight | 100–1000 g | 200–5000 g | 5000 g + |
+| Accuracy | ±1 g (≤100 g); ±1 % (>100 g), depends on product | ±1 g (≤100 g); ±1 % (>100 g), depends on product | ±1 g (≤100 g); ±1 % (>100 g), depends on product |
+| Voltage | 380 V / 220 V, 50/60 Hz | 380 V / 220 V, 50/60 Hz | 380 V / 220 V, 50/60 Hz |
+| Dimensions (line) | 4441×2000×3600 mm | 4700×2234×3800 mm | 4700×2265×4000 mm |
+| Gross weight | ≈1300 kg | ≈1600 kg | ≈2000 kg |
+
+Options: Standard line: Z-type bucket elevator, multihead weigher, support platform, VFFS bagger, output conveyor. Add check weigher, metal detector, rotary collection table or case packer.
+
+FAQ:
+- Q: 10-head or 14-head weigher — which do I need?
+  A: A 10-head weigher suits most snacks up to about 60 weighments/min. A 14-head weigher is faster and more accurate, recommended for high-speed lines or expensive products such as nuts and dried fruit.
+- Q: Can it handle sticky or frozen products?
+  A: Yes. Dimpled or Teflon-coated buckets and an inclined or gentle-drop VFFS are used for sticky, fragile or frozen foods such as dumplings.
+- Q: How long does installation take?
+  A: Usually 3–7 days on site including test running and operator training. Remote video commissioning is also available.
+
+## Automatic Vertical Form Fill Seal Packing Machine (VFFS Mainframe)
+URL: https://www.allfoodmach.com/products/vertical-form-fill-seal-packing-machine/
+Models: FL-V420 / FL-V520 / FL-V620 / FL-V730 / FL-V900
+
+The bag-making mainframe at the heart of most packing lines — five frame sizes from 420 to 900 mm film width, matched with a weigher, cup filler, auger or liquid pump.
+
+Applications: Granules, snacks, rice, beans, sugar, salt, frozen food, ice cubes, detergent, fertiliser — any product with a suitable feeder.
+
+Features:
+- Bag styles: back-seal pillow, gusset / stand-up, hanging-hole bags.
+- Servo film pulling, automatic film-deviation correction.
+- Multiple alarm and protection functions to reduce waste.
+- Fast and high-speed versions available.
+- Frame size and contact-part material chosen to suit bag size and product.
+
+| Spec | FL-V420 | FL-V520 | FL-V620 | FL-V730 | FL-V900 |
+|---|---|---|---|---|---|
+| Packing speed (bags/min) | 70 | 70 | 50 | 45 | max 30 |
+| Film width | 120–420 mm | 160–520 mm | 260–620 mm | 260–730 mm | 560–900 mm |
+| Bag length | 60–330 mm | 80–350 mm | 80–400 mm | 80–470 mm | 380–1000 mm |
+| Bag width | 50–200 mm | 70–250 mm | 120–300 mm | 120–350 mm | 260–435 mm |
+| Film thickness | 0.04–0.09 mm | 0.04–0.09 mm | 0.04–0.09 mm | 0.04–0.09 mm | 0.06–0.12 mm |
+| Air | 0.8 MPa 0.3 m³/min | 0.8 MPa 0.3 m³/min | 0.8 MPa 0.4 m³/min | 0.8 MPa 0.5 m³/min | 0.8 MPa 0.6 m³/min |
+| Power | 3 kW 220 V | 3.4 kW 220 V | 3.8 kW 220 V | 3.8 kW 220 V | 4 kW 220 V |
+| Dimensions | 1460×1050×1410 | 1480×1130×1450 | 1600×1300×1790 | 1630×1400×1960 | 1990×1630×2400 |
+| Weight | 400 kg | 480 kg | 600 kg | 700 kg | 900 kg |
+| Max bag volume | 2.5 L | 4.3 L | 7 L | 10 L | 18 L |
+
+Options: Feeding/dosing: multihead weigher, linear weigher (4-head or large 2-head), volumetric cups, auger filler, liquid pump. Elevators: Z-type, incline, big-bucket. Coding, nitrogen, gusset, punch hole.
+
+FAQ:
+- Q: Which frame size should I choose?
+  A: Choose by bag width: the film width ≈ (bag width + 10 mm) × 2. For a 200 mm wide bag you need ~420 mm film, so the FL-V420 or FL-V520. Larger 5–25 kg bags need the FL-V730 or FL-V900.
+- Q: Linear weigher or multihead weigher?
+  A: Linear weighers are economical for free-flowing, uniform granules (sugar, rice, beans) at moderate speed. Multihead weighers are faster and better for irregular products like chips and candy.
+
+## Automatic Powder Vertical Packing Machine with Auger Filler
+URL: https://www.allfoodmach.com/products/auger-powder-vertical-packing-machine/
+Models: FL-V420P / FL-V520P
+
+Screw feeder → auger filler → vertical bagger for flour, milk powder, starch, spices, protein and chemical powders, with dust-controlled filling.
+
+Applications: Milk powder, flour, milk-tea powder, starch, seasoning powder, chilli powder, protein powder, detergent, putty and construction powder, chemical powder.
+
+Features:
+- Feeding method selected for your powder (screw conveyor or vacuum feeder).
+- Auger size matched to fill weight for higher accuracy.
+- Servo-driven auger with agitator for non-free-flowing powders.
+- Several sealing patterns available; stable operation and neat bags.
+
+| Spec | FL-V420P | FL-V520P |
+|---|---|---|
+| Packing speed | 5–70 bags/min | 5–65 bags/min |
+| Film width | 120–420 mm | 160–520 mm |
+| Bag size | L 60–330, W 50–200 mm | L 80–350, W 70–250 mm |
+| Bag type | Back-seal, gusset, stand-up, hanging-hole | Back-seal, gusset, stand-up, hanging-hole |
+| Film thickness | 0.04–0.09 mm | 0.04–0.09 mm |
+| Air consumption | 0.8 MPa, 0.5 m³/min | 0.8 MPa, 0.5 m³/min |
+| Power | 3 kW, 220 V, 50 Hz | 3 kW, 220 V, 50 Hz |
+| Dimensions | 1460×1050×1410 mm | 1480×1130×1450 mm |
+| Weight | 400 kg | 480 kg |
+| Max bag volume | 2.5 L | 4.3 L |
+
+Options: Large-dose powder version (1–5 kg) with big auger and rotary collecting table; dust collector; nitrogen; check weigher; metal detector.
+
+FAQ:
+- Q: How accurate is auger filling?
+  A: Typically ±1 % for fill weights above 100 g and about ±1–2 g below 100 g, depending on powder density and flowability.
+- Q: Can it pack fine, dusty powders?
+  A: Yes. We add a dust-suction port, anti-drip auger and closed hopper; for very fine powder we recommend a vacuum feeder.
+
+## Automatic Liquid & Paste Vertical Packing Machine
+URL: https://www.allfoodmach.com/products/liquid-paste-vertical-packing-machine/
+Models: FL-V420L series
+
+Pumps and seals sauces, ketchup, edible oil, honey, vinegar, shampoo and liquid detergent into pillow sachets — viscosity-matched pumping for clean, leak-free seals.
+
+Applications: Ketchup, chilli sauce, hot-pot base, soy sauce, vinegar, edible oil, honey, jam, shampoo, liquid detergent, lubricating oil.
+
+Features:
+- Fully automatic liquid and paste packing.
+- Handles liquids of different viscosities; pump type matched to product.
+- No product – no bag, saving film.
+- Contact-part material customised to product (e.g. 316L for salty or acidic sauces).
+- High accuracy and clean, attractive sachets.
+
+| Spec | Small pump | Medium pump | Large pump |
+|---|---|---|---|
+| Dosing range | 30–250 ml | 10–100 ml | 1000–3000 ml |
+| Mainframe | Matched from FL-V420 – FL-V730 by bag size | Matched from FL-V420 – FL-V730 by bag size | Matched from FL-V420 – FL-V730 by bag size |
+| Bag type | Back-seal pillow / 3-side seal | Back-seal pillow / 3-side seal | Back-seal pillow / 3-side seal |
+| Control | PLC + touch screen | PLC + touch screen | PLC + touch screen |
+
+Options: Heated hopper with stirrer for hot sauces; CIP-friendly quick-release pump; premade-pouch liquid version (8-station) for spout and stand-up pouches.
+
+FAQ:
+- Q: Can it pack sauce with solid pieces?
+  A: Yes, with a large-bore piston pump and rotary valve. Tell us the maximum particle size.
+- Q: How do you avoid leaking seals?
+  A: Anti-drip nozzles, liquid-stopping clamps and extended sealing jaws with temperature PID control prevent product contaminating the seal area.
+
+## 8-Station Rotary Premade Pouch Packing Machine
+URL: https://www.allfoodmach.com/products/premade-pouch-packing-machine/
+Models: FL-R200 / FL-R250 / FL-R350
+
+Picks, prints, opens, fills, seals and discharges your premade pouches — zipper doypacks, stand-up, flat, gusset and spout bags — for snacks, powders, liquids and pet food.
+
+Applications: Solids: candy, nuts, jerky, dried fruit, pet food, frozen food. Powder: milk powder, coffee, spices, protein. Liquid/paste: sauce, honey, jam, juice, detergent.
+
+Features:
+- Eight working stations: bag feeding, coding, zipper opening, filling ×2, vibration/settling, sealing, cooling & discharge.
+- Bag width changed from the touch screen in minutes — one machine handles several pouch sizes.
+- No bag / bag not opened – no fill, no seal: saves pouches and product.
+- Combine with multihead weigher (solids), auger filler (powder) or piston pump (liquid).
+- Options: nitrogen flushing, vacuum, zipper re-closing, degassing valve applicator.
+
+| Spec | FL-R200 / R250 / R350 (general range) |
+|---|---|
+| Pouch size | W 80–350 mm, L 100–350 mm |
+| Capacity | 16–50 bags/min (depends on product and fill volume) |
+| Packing weight | 30–5000 g (general range) |
+| Accuracy | ±1 g (≤100 g); ±1 % (>100 g) |
+| Voltage | 380 V / 220 V |
+| Total power | 2.3–7.5 kW |
+| Air consumption | 0.6–1.2 m³/min |
+| Dimensions | L2300 × W1560 × H1460 mm |
+| Gross weight | 1600 kg |
+
+Options: Suitable pouch types: back-seal, zipper, 4-side seal, 3-side seal, side-seal with zipper, spout doypack, stand-up, flat-bottom. Single-station and horizontal premade-bag machines are available for lower budgets.
+
+FAQ:
+- Q: Premade pouch or VFFS — which is better?
+  A: VFFS makes bags from roll film and has the lowest packaging cost per bag. Premade pouch machines use printed pouches (zipper, flat-bottom, spout) for a premium retail look and fast size changeover. Many customers start with VFFS for bulk and use premade for retail lines.
+- Q: Can it fill zipper pouches?
+  A: Yes. The machine opens the zipper and the pouch mouth with suction cups and a zipper-opening device, then fills and seals below the zipper.
+- Q: What is the vacuum version for?
+  A: The rotary vacuum premade machine evacuates air before sealing — used for pickles, meat, rice bricks and other products that need extended shelf life.
+
+## Horizontal Flow Wrap (Pillow) Packing Machine
+URL: https://www.allfoodmach.com/products/horizontal-flow-wrap-machine/
+Models: FL-H350 / FL-H450 / FL-H600
+
+Pillow-packs bread, cakes, biscuits, candy bars, mooncakes, ice lollies, soap, masks and hardware at up to 230 packs/min — with optional automatic sorting and feeding lines.
+
+Applications: Bread, cake, biscuits, candy, chocolate bars, ice cream lollies, instant noodles, vegetables, soap, face masks, medical supplies, hardware, toys.
+
+Features:
+- Full servo version: unlimited bag length, fibre-optic sensor detects product length automatically.
+- Anti-empty-bag and anti-cut functions; no product – machine waits, saving film.
+- Recipe memory — one machine for several products.
+- Upper-film or lower-film (back-pull) versions for trays, sticky or soft products.
+- Options: date coder, gas-filling (MAP), cake drop device, automatic sorting line, hanging hole, easy-tear notch.
+
+| Spec | FL-H350 | FL-H450 | FL-H600 |
+|---|---|---|---|
+| Film width | max 350 mm | max 450 mm | max 600 mm |
+| Bag length | 70–300 mm (servo: unlimited) | 70–400 mm | 70–500 mm |
+| Bag width | 50–160 mm | 50–210 mm | 50–280 mm |
+| Product height | max 40–60 mm | max 75 mm | max 100 mm |
+| Film roll diameter | max 320 mm | max 320 mm | max 320 mm |
+| Packing speed | 40–230 packs/min | 40–180 packs/min | 40–100 packs/min |
+| Power (220 V 50/60 Hz) | 2.8–4.3 kW | 3.2–4.5 kW | 3.4–4.7 kW |
+| Dimensions | ≈3980×720×1390 mm | ≈3940×880×1430 mm | ≈4210×970×1420 mm |
+| Weight | 580 kg | 650 kg | 700 kg |
+
+Options: Large full-servo models (600/700/900 mm film) for big items; pillow heat-shrink wrapping with dual-zone shrink tunnel (POF film); bubble-wrap packing machine; automatic food sorting line (50–200 packs/min).
+
+FAQ:
+- Q: Upper-film or lower-film flow wrapper?
+  A: Upper-film (standard) suits products in trays or with a defined top/bottom. Lower-film (back-pull) suits soft, sticky or irregular products like noodles, vegetables and bread, because the product lies on the film rather than on a belt.
+- Q: Can it link to my production line?
+  A: Yes. An automatic sorting/feeding line receives products from your oven, cooling or moulding line, aligns them and feeds the wrapper — single-layer or stacked.
+
+## Automatic Liquid & Sauce Bottle Filling and Capping Line
+URL: https://www.allfoodmach.com/products/liquid-filling-capping-line/
+Models: FL-LF / FL-SF
+
+Turnkey bottle and jar lines for sauces, oils, beverages without gas, cosmetics and chemicals: bottle unscrambler → piston filler → cap placer → capper → labeller → collection.
+
+Applications: Chilli sauce, ketchup, sesame paste, honey, edible oil, juice (non-carbonated), cosmetics, lotions, pesticides, fine chemicals.
+
+Features:
+- Piston (plunger) volumetric filling — bottle in, positioning, filling and out all PLC-controlled.
+- Measures liquids of different viscosities with high accuracy.
+- Semi-automatic or fully automatic, configured to your capacity and budget.
+- Capping machine chosen by cap type (screw, press-on, aluminium foil induction).
+- Bottle guides and star wheels customised to your bottle shape.
+
+| Spec | FL-LF liquid line | FL-SF sauce line |
+|---|---|---|
+| Fill capacity | 25–250 / 50–500 / 150–1000 ml | 100–1000 ml (custom) |
+| Speed | 10–80 bottles/min | 20–30 bottles/min |
+| Power supply | 220 / 380 V | 220 / 380 V |
+| Motor power | 7.5 kW | 2.0 kW |
+| Air | 0.6–1 MPa | ≈30 L/min |
+| Filler dimensions | 9000×1500×2100 mm | 5000×1000×1980 mm |
+| Weight | ≈1000 kg | ≈300 kg |
+
+Options: Powder can-filling line (auger, 10–1000 g, ≤±1 %, 10–30 cans/min) and granule jar-filling line with multihead weigher (30–35 jars/min) are available — see the granule filling line.
+
+FAQ:
+- Q: Can you match my bottle?
+  A: Yes. Send bottle and cap samples or drawings; we design change parts for each size and can include several sets.
+- Q: Is the line suitable for carbonated drinks?
+  A: No, these piston fillers are for still (non-gas) liquids and pastes.
+
+## Granule & Powder Jar / Can Filling Line
+URL: https://www.allfoodmach.com/products/granule-jar-filling-line/
+Models: FL-GF / FL-PF
+
+Fills nuts, candy, coffee beans, dried fruit and powders into jars, cans and bottles: bottle unscrambler → Z elevator → multihead weigher or auger → capper/seamer → labeller.
+
+Applications: Nuts, candy, gummies, coffee beans, dried fruit, pet treats, tea, milk powder, protein powder, spices.
+
+Features:
+- Customised to capacity and floor space.
+- Semi-automatic or fully automatic configuration.
+- Sealer chosen by lid material (screw cap, induction foil, can seamer).
+- Feeding plates made for your container shape.
+
+| Spec | FL-GF granule line | FL-PF powder line |
+|---|---|---|
+| Speed | 30–35 jars/min | 10–30 cans/min |
+| Fill range | By weigher | 10–1000 g (custom) |
+| Accuracy | Multihead weigher | ≤ ±1 % |
+| Container | H 50–200 mm, Ø 35–130 mm | Custom |
+| Power | 8.5 kW, 220 V 50 Hz | 2 kW, 380 V 50/60 Hz |
+| Line size | 11500×4000×3600 mm | 4000×900×1800 mm |
+| Weight | ≈2050 kg | ≈300 kg |
+
+Options: Add nitrogen flushing, induction sealing, shrink sleeve labelling, case packing.
+
+FAQ:
+- Q: Can one line run several jar sizes?
+  A: Yes, with change parts for each jar and a recipe on the weigher; changeover takes 15–30 minutes.
+
+## 20–30 kg Granule Weighing & Bagging Line
+URL: https://www.allfoodmach.com/products/25kg-granule-bagging-line/
+Models: FL-B25S / FL-B25A
+
+Bucket elevator → storage hopper → dual-speed weigher → automatic bag placer → sewing or heat sealing → conveyor, for 20–30 kg bags of feed, fertiliser, grain, sugar and plastic pellets.
+
+Applications: Animal feed pellets, fertiliser, rice, beans, sugar, salt, plastic pellets and resin, seeds, cement additives, sand.
+
+Features:
+- Coarse + fine dual-speed feeding solves the speed-vs-accuracy trade-off.
+- 0.01 % F.S. load cells with PLC dynamic compensation for ≤ ±0.1 % accuracy.
+- Cushioned discharge chute keeps breakage of fragile pellets ≤ 0.5 %.
+- Heat sealing (PID temperature control) or sewing closure.
+- Recipe change from the touch screen; no mechanical adjustment.
+
+| Spec | FL-B25S (semi-automatic) | FL-B25A (fully automatic) |
+|---|---|---|
+| Bag weight | 20–30 kg (adjustable) | 20–30 kg (adjustable) |
+| Accuracy | ≤ ±0.1 % (≤ ±25 g at 25 kg) | ≤ ±0.1 % (≤ ±25 g at 25 kg) |
+| Speed | 10–18 bags/min | 18–30 bags/min |
+| Operators | 2–3 | 1 |
+| Particle size | 0.1–10 mm | 0.1–10 mm |
+| Contact material | SUS304 / 316L | SUS304 / 316L |
+| Power | 380 V 3-phase, 2.2–4 kW | 380 V 3-phase, 4–7.5 kW |
+| Air | 0.5–0.7 MPa, 0.3–0.5 m³/min | 0.5–0.7 MPa, 0.5–0.8 m³/min |
+| Suited to | ≤ 5,000 bags/day | ≥ 10,000 bags/day |
+
+Options: Explosion-proof version for chemical plants; robotic palletiser; check weigher; metal detector; inkjet coder.
+
+FAQ:
+- Q: Semi-automatic or fully automatic?
+  A: Semi-automatic (operator hangs the bag) is economical for up to about 5,000 bags per day or limited floor space. Fully automatic (automatic bag placing) suits 10,000+ bags per day and needs only one operator.
+- Q: How fast is the payback?
+  A: Typical payback is 6–10 months for semi-automatic lines and 12–18 months for fully automatic lines, depending on local labour costs.
+
+## Weighers, Conveyors, Check Weighers & Auxiliary Equipment
+URL: https://www.allfoodmach.com/products/packing-machine-auxiliary-equipment/
+Models: FL auxiliary series
+
+Complete the line: feeding, weighing, inspection, coding and utilities — supplied and tested together with your packing machine.
+
+Applications: Every packing line.
+
+Features:
+- Multihead weighers: 10-head and 14-head, 1.6 L / 2.5 L buckets; special versions for noodles and salad.
+- Linear weighers: mini 4-head, standard 4-head, large 2-head (15 L) for bulk products.
+- Conveyors: Z-type bucket elevator, incline belt, big-bucket elevator, chain-bucket, screw and vacuum feeders, vibratory bowl.
+- Inspection: drop-through and conveyor metal detectors, check weigher, combined check weigher + metal detector.
+- Coding: ribbon, thermal-transfer (TTO), ink-roller, inkjet and laser coders.
+- Finished-product conveyor, rotary collecting table, bag inserter, labeller, carton erector and sealer.
+- Utilities: screw air compressor, nitrogen generator with refrigerated dryer.
+
+FAQ:
+- Q: Do I need a check weigher?
+  A: If you sell by weight in the EU, UK, USA or Gulf markets, a check weigher is strongly recommended to reject under-weight packs and document compliance.
+
+## General FAQ
+- Q: What information do you need to quote a packing machine?
+  A: Five things: (1) the product and its form — powder, granule, liquid or solid; (2) weight or volume per pack; (3) required speed in packs per minute or per day; (4) pack type and size — sachet, stick, pillow bag, gusset bag, premade zipper pouch, bottle; and (5) your voltage (e.g. 220 V 1-phase or 380/415/440 V 3-phase, 50/60 Hz). Photos of a sample pack help a lot.
+- Q: Can you test my product before I buy?
+  A: Yes. Send product samples and film or pouches; we run them on the machine and send you a video and the finished packs, free of charge.
+- Q: What voltage do your machines use?
+  A: Standard is 220 V or 380 V, 50 Hz. We build to your local supply — for example 110 V 60 Hz (USA), 220 V 60 Hz, 415 V 50 Hz (Europe/Australia) or 440 V 60 Hz — at no or little extra cost.
+- Q: What is the lead time?
+  A: Standard machines ship in about 20–35 working days after deposit; complete lines and custom projects in about 35–60 days.
+- Q: What are your payment terms?
+  A: Typically 30 % T/T deposit and 70 % balance before shipment after you approve the factory acceptance test (FAT) video. L/C at sight is accepted for larger orders.
+- Q: Do you provide installation and training?
+  A: Yes. Every machine is tested with your product before shipment and comes with an English manual, wiring diagram and video guides. Our engineers can travel to your factory for installation, commissioning and operator training; the buyer covers air tickets, visa, accommodation and the engineer's daily allowance. Remote video support is always free.
+- Q: How long is the warranty?
+  A: 18 months on the machine (wear parts excluded), with lifetime technical support. A set of wear parts is shipped with every machine and spare parts are kept in stock for fast dispatch.
+- Q: Are your machines CE certified?
+  A: Machines are built to CE requirements on request. They are built with food-grade SUS304 (or SUS316L) contact parts and branded electrical components.
+- Q: Which countries do you export to?
+  A: We supply customers in Europe, the Middle East, Africa, Southeast Asia and South Asia. Ask us for reference videos of machines running in your region.
