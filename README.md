@@ -12,7 +12,7 @@ Edit `config.py` (company info, domain, form endpoint, analytics) and `data.py` 
 
 ## Live site
 https://www.allfoodmach.com — served by GitHub Pages from the `docs/` folder of `main`.
-To update: edit `config.py` / `data.py`, run `python3 build.py`, then copy `dist/` to `docs/` (keep `docs/CNAME`) and push.
+To update: edit `config.py` / `data.py`, run `./publish.sh` (build + checks + refresh `docs/`), then commit and push. See `MAINTENANCE.md` and `CONTENT_PLAN.md`.
 
 ## Deploy elsewhere (Cloudflare Pages or Netlify, free)
 1. Create a project, upload the `dist/` folder (or connect a Git repo with build command `python3 build.py`, output `dist`).

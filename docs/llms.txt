@@ -35,11 +35,15 @@ Provide: product and its form; weight/volume per pack; required speed; pack type
 - [Liquid, Sauce & Paste Packing Solutions](https://www.allfoodmach.com/applications/liquid-sauce-packing-solutions/): Ketchup, chilli sauce, honey, jam, edible oil, vinegar, juice, shampoo, lotions and liquid detergent.
 - [Bakery, Candy & Solid Product Packing](https://www.allfoodmach.com/applications/bakery-candy-flow-wrap-solutions/): Bread, cake, biscuits, mooncakes, candy and chocolate bars, ice lollies, soap, masks, medical and hardware items.
 - [Frozen Food Packing Solutions](https://www.allfoodmach.com/applications/frozen-food-packing-solutions/): Frozen dumplings, wontons, meatballs, shrimp, vegetables and ice cubes.
+- [Coffee, Milk Tea & Sugar Stick Packing Machines](https://www.allfoodmach.com/applications/coffee-milk-tea-stick-packing-solutions/): Single-serve sticks and sachets of instant coffee, 3-in-1 coffee, milk tea, creamer, sugar, cocoa and solid drinks.
+- [Spice & Seasoning Powder Packing Machines](https://www.allfoodmach.com/applications/spice-seasoning-powder-packing-solutions/): Chilli powder, curry, black pepper, masala, cumin, garlic powder, chicken and noodle seasoning.
+- [Potato Chips & Puffed Snack Packing Machines](https://www.allfoodmach.com/applications/chips-snack-packing-solutions/): Potato chips, corn chips, puffed snacks, popcorn, extruded snacks, crackers and nuts.
 
 ## Guides
+- [How Much Does a Packing Machine Cost? 7 Factors That Set the Price](https://www.allfoodmach.com/blog/packing-machine-price-factors/): A packing machine's price is set mainly by the dosing system your product needs, the speed (number of lanes or bags per minute), the pack format, the automation around the machine, contact materials and options such as nitrogen flushing or check weighing.
 - [How to Choose the Right Packing Machine: A 5-Step Buyer's Guide](https://www.allfoodmach.com/blog/how-to-choose-a-packing-machine/): Choose a packing machine by answering five questions in order: what the product is, how much goes in each pack, how many packs per minute, what pack format, and what your site can supply (power, air, space).
 - [VFFS vs Premade Pouch Packing Machine: Which Should You Buy?](https://www.allfoodmach.com/blog/vffs-vs-premade-pouch-packing-machine/): Choose VFFS for the lowest packaging cost and highest speed with pillow or gusset bags; choose a premade-pouch machine when you need zipper, flat-bottom or spout pouches and a premium retail look.
-- [Multi-Lane Stick Pack & Sachet Machines: Lanes, Speed and Output Explained](https://www.allfoodmach.com/blog/multi-lane-stick-pack-machine-guide/): Output of a multi-lane machine = number of lanes × 20–40 cuts per minute. Pick the number of lanes from your daily target, then the seal style and dosing system from your product.
+- [Multi-Lane Stick Pack Machines: Lanes, Speed & Output Explained](https://www.allfoodmach.com/blog/multi-lane-stick-pack-machine-guide/): Output of a multi-lane machine = number of lanes × 20–40 cuts per minute. Pick the number of lanes from your daily target, then the seal style and dosing system from your product.
 
 ## Optional
 - [Full product specifications in one file](https://www.allfoodmach.com/llms-full.txt)

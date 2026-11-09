@@ -58,6 +58,10 @@ def img_tag(pg, name, alt, cls="", eager=False, sizes=None):
     load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return f'<img src="{pg.rel("assets/img/"+name+".webp")}" alt="{E(alt)}" width="{w}" height="{h}" {load} class="{cls}">'
 
+def wa_link(topic):
+    from urllib.parse import quote
+    return f"https://wa.me/{SITE['whatsapp']}?text=" + quote(f"Hello {B}, I'm interested in: {topic}. Please send me details and price.")
+
 def ld(obj):
     return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False, separators=(",", ":")) + "</script>"
 
@@ -110,7 +114,7 @@ def header(pg, active=""):
 <nav class="main" id="mainnav" aria-label="Main"><ul>{lis}<li><a class="btn btn-primary" href="{pg.rel("contact")}#quote">Get a Quote</a></li></ul></nav>
 </div></header>'''
 
-def footer(pg):
+def footer(pg, topic="your packing machine"):
     cats = "".join(f'<li><a href="{pg.rel("products/"+c["slug"])}">{E(c["short"])}</a></li>' for c in CATEGORIES)
     apps = "".join(f'<li><a href="{pg.rel("applications/"+a["slug"])}">{E(a["name"])}</a></li>' for a in APPLICATIONS)
     return f'''<footer class="site"><div class="wrap"><div class="fgrid">
@@ -122,7 +126,8 @@ def footer(pg):
 <div><h3>Applications</h3><ul>{apps}</ul></div>
 <div><h3>Company</h3><ul><li><a href="{pg.rel("about")}">About us</a></li><li><a href="{pg.rel("faq")}">FAQ</a></li><li><a href="{pg.rel("blog")}">Buying guides</a></li><li><a href="{pg.rel("contact")}">Contact &amp; quote</a></li><li><a href="{pg.rel("privacy-policy")}">Privacy policy</a></li><li><a href="{pg.rel("sitemap.xml")}">Sitemap</a></li></ul></div>
 </div><div class="legal"><span>© 2026 {E(LEGAL)}. All rights reserved.</span><span>Made in China · Exported worldwide</span></div></div></footer>
-<a class="wa" href="https://wa.me/{SITE["whatsapp"]}?text=Hello%2C%20I%27m%20interested%20in%20your%20packing%20machine" aria-label="Chat on WhatsApp" rel="nofollow">{WA_SVG}</a>'''
+<a class="wa" href="{wa_link(topic)}" aria-label="Chat on WhatsApp" rel="nofollow" data-track="whatsapp_float">{WA_SVG}</a>
+<nav class="mbar" aria-label="Quick contact"><a class="mb-wa" href="{wa_link(topic)}" rel="nofollow" data-track="whatsapp_bar">{WA_SVG}<span>WhatsApp</span></a><a class="mb-q" href="#quote" data-track="quote_bar">Get a Quote</a></nav>'''
 
 def quote_form(pg, product="", heading="Get a free quote & machine recommendation"):
     opts = "".join(f'<option{" selected" if p["name"] == product else ""}>{E(p["name"])}</option>' for p in PRODUCTS)
@@ -165,6 +170,9 @@ document.querySelectorAll('form.inq').forEach(function(f){
    else{fallback();}}).catch(fallback);
  });
 });
+document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a||!window.gtag)return;
+ if(a.href.indexOf('wa.me/')>-1){gtag('event','whatsapp_click',{link_location:a.dataset.track||'inline'});}
+ else if(a.getAttribute('href')&&a.getAttribute('href').indexOf('#quote')>-1){gtag('event','quote_cta_click',{link_location:a.dataset.track||'inline'});}});
 document.querySelectorAll('.thumbs button').forEach(function(b){b.addEventListener('click',function(){
  var m=document.querySelector('.p-media .main img');m.src=b.dataset.src;m.alt=b.dataset.alt;
  document.querySelectorAll('.thumbs button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});});});
@@ -172,6 +180,12 @@ document.querySelectorAll('.thumbs button').forEach(function(b){b.addEventListen
 
 def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_type="website", noindex=False):
     canon = url(pg.path + "/" if pg.path else "")
+    parts = title.split(" | ")
+    while len(" | ".join(parts)) > 65 and len(parts) > 2:
+        parts.pop(-2)                      # drop middle segment (e.g. model list) first
+    if len(" | ".join(parts)) > 65 and len(parts) == 2:
+        parts = parts[:1]                  # then drop the brand suffix
+    title = " | ".join(parts)
     ga = ""
     if SITE["ga4_id"]:
         ga = f'<script async src="https://www.googletagmanager.com/gtag/js?id={SITE["ga4_id"]}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag("js",new Date());gtag("config","{SITE["ga4_id"]}");</script>'
@@ -212,7 +226,7 @@ def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_
 <main id="main">
 {body}
 </main>
-{footer(pg)}
+{footer(pg, title.split(" | ")[0])}
 {FORM_JS}
 </body>
 </html>'''
@@ -274,7 +288,7 @@ def build_home():
 
 <section class="alt"><div class="wrap">
 <span class="eyebrow">Applications</span><h2>Solutions by industry</h2>
-<div class="grid g3" style="margin-top:24px">{apps}</div>
+<div class="grid g4" style="margin-top:24px">{apps}</div>
 </div></section>
 
 <section><div class="wrap prose">
@@ -366,7 +380,7 @@ def build_product(p):
 <div><h1>{E(p["name"])}</h1><p class="models">Models: {E(p["models"])}</p>
 <p style="font-size:1.08rem;color:var(--ink-2)">{E(p["lead"])}</p>
 <dl class="facts">{facts}</dl>
-<div class="cta-row"><a class="btn btn-primary" href="#quote">Get price &amp; recommendation</a><a class="btn btn-ghost" href="https://wa.me/{SITE["whatsapp"]}?text={E(("Hi, I'm interested in the "+p["short"]).replace(" ","%20"))}" rel="nofollow">WhatsApp us</a></div>
+<div class="cta-row"><a class="btn btn-primary" href="#quote">Get price &amp; recommendation</a><a class="btn btn-ghost" href="{wa_link(p["name"]+" ("+p["models"]+")")}" rel="nofollow" data-track="whatsapp_product">WhatsApp us</a></div>
 </div></div></div>
 <section class="alt" style="padding:48px 0"><div class="wrap prose">
 <div class="answer"><p><strong>At a glance:</strong> {E(answer)}</p></div>
@@ -400,19 +414,26 @@ def build_applications():
     cards = "".join(f'''<a class="card" href="{pg.rel("applications/"+a["slug"])}"><div class="ph">{img_tag(pg, a["img"], a["name"])}</div><div class="bd"><h3>{E(a["name"])}</h3><p>{E(a["lead"])}</p><span class="more">See solutions →</span></div></a>''' for a in APPLICATIONS)
     body = crumbs_html(pg, [("Home", ""), ("Applications", "applications")]) + f'''<section><div class="wrap"><h1>Packaging Solutions by Product</h1>
 <div class="answer prose"><p>Pick your product type to see which packing machines, dosing systems and pack formats fit — powder, snacks and granules, liquids and sauces, bakery and candy, or frozen food.</p></div>
-<div class="grid g3" style="margin-top:24px">{cards}</div></div></section><section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
+<div class="grid g4" style="margin-top:24px">{cards}</div></div></section><section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
     write(pg, layout(pg, f"Packaging Solutions by Industry & Product | {B}", "Packing machine solutions for powder, snacks & granules, liquid & sauce, bakery & candy, and frozen food — dosing systems, pack formats and complete lines.", body,
           [crumbs_ld([("Home", ""), ("Applications", "applications/")])], active="applications"))
     for a in APPLICATIONS:
         path = "applications/" + a["slug"]; pg = Page(path)
         cards = "".join(product_card(pg, PROD[s]) for s in a["products"])
+        extra = ""
+        if a.get("sections") or a.get("faq"):
+            secs = "".join(f"<h2>{E(h)}</h2>{c}" for h, c in a.get("sections", []))
+            fq = ("<h2>FAQ</h2>" + faq_html(a["faq"])) if a.get("faq") else ""
+            extra = f'<section style="padding:24px 0 48px"><div class="wrap prose">{secs}{fq}</div></section>'
         body = crumbs_html(pg, [("Home", ""), ("Applications", "applications"), (a["name"], path)]) + f'''
 <section style="padding-bottom:24px"><div class="wrap split"><div><h1>{E(a["name"])}</h1><div class="answer"><p>{E(a["lead"])}</p></div><p>{E(a["body"])}</p>
 <a class="btn btn-primary" href="#quote">Send your product details</a></div><div class="hero-img">{img_tag(pg, a["img"], a["name"], eager=True)}</div></div></section>
+{extra}
 <section class="alt" style="padding:40px 0"><div class="wrap"><h2>Recommended machines</h2><div class="grid g3" style="margin-top:20px">{cards}</div></div></section>
 <section><div class="wrap">{quote_form(pg)}</div></section>'''
-        write(pg, layout(pg, f"{a['name']} | {B}", a["meta"], body,
-              [crumbs_ld([("Home", ""), ("Applications", "applications/"), (a["name"], path + "/")])], active="applications", og_img=a["img"]))
+        sch = [crumbs_ld([("Home", ""), ("Applications", "applications/"), (a["name"], path + "/")])]
+        if a.get("faq"): sch.append(faq_ld(a["faq"]))
+        write(pg, layout(pg, f"{a['name']} | {B}", a["meta"], body, sch, active="applications", og_img=a["img"]))
 
 def build_about():
     pg = Page("about")

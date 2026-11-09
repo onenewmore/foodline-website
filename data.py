@@ -586,7 +586,48 @@ APPLICATIONS = [
    "lead": "Frozen dumplings, wontons, meatballs, shrimp, vegetables and ice cubes.",
    "body": "Frozen products are heavy, hard and sometimes fragile at the edges. We use large 2-head linear weighers or multihead weighers with an incline conveyor, and an inclined VFFS that reduces the drop height to cut breakage. Bags from 500 g to 5 kg+ in pillow or gusset format.",
    "products": ["vffs-multihead-weigher-packing-machine", "vertical-form-fill-seal-packing-machine"]},
+  {"slug": "coffee-milk-tea-stick-packing-solutions", "name": "Coffee, Milk Tea & Sugar Stick Packing Machines", "img": "ml-backseal",
+   "meta": "Coffee stick pack machine for 3-in-1 coffee, instant coffee, milk tea, creamer and sugar sticks: 2–16 lanes, 20–40 sticks/lane/min, auger or cup dosing. Free sample test.",
+   "lead": "Single-serve sticks and sachets of instant coffee, 3-in-1 coffee, milk tea, creamer, sugar, cocoa and solid drinks.",
+   "body": "Drink-mix sticks are packed on multi-lane back-seal machines: the film is slit into lanes, each lane forms, fills and seals its own stick, and all lanes are cut together. Output is lanes × 20–40 sticks per minute, so a 6-lane machine makes roughly 120–240 sticks per minute with one operator. Powdered coffee, milk tea and creamer use servo auger (screw) dosing; free-flowing sugar uses volumetric cups. For square drink-mix sachets choose a 4-side seal machine instead.",
+   "sections": [
+     ("Which machine for which pack?", "<ul><li><strong>Slim stick packs</strong> (instant coffee, sugar, creamer, electrolyte): multi-lane stick pack machine FL-S300 / S600 / S900, 2–16 lanes, stick width 20–105 mm.</li><li><strong>Square or rectangular sachets</strong> (3-in-1 coffee, milk tea): multi-lane 4-side seal machine FL-M500 / M700 / M980, sachet width 50–125 mm.</li><li><strong>Low volume or start-up</strong>: single-lane FL-240B (back seal) at 25–40 sachets per minute.</li><li><strong>Retail coffee beans or ground coffee</strong>: rotary premade-pouch machine with degassing-valve applicator and nitrogen flushing, or a jar filling line.</li></ul>"),
+     ("Dosing tips for coffee and milk-tea powders", "<p>3-in-1 coffee and milk-tea premixes contain sugar, creamer and coffee with different densities, and they absorb moisture. Use an agitated hopper so the mix stays uniform, keep the packing room dry, and choose a laminated film with a good moisture barrier (for example PET/AL/PE). Send us your premix and target weight and we test it on the machine before you order.</p>"),
+     ("From sticks to boxes", "<p>Multi-lane machines can feed an automatic counting and boxing line, so finished sticks go straight into display boxes or cartons without manual counting.</p>"),
+   ],
+   "faq": [
+     ("How many coffee sticks can one machine pack per minute?", "Each lane runs 20–40 sticks per minute. A 4-lane machine packs about 80–160 sticks per minute, an 8-lane machine about 160–320, and a 16-lane machine up to about 640, depending on the powder and fill weight."),
+     ("Can the same machine pack coffee and sugar?", "Yes, if it is configured for both. Powder uses an auger filler and sugar uses volumetric cups, so we fit the dosing system for your main product and can supply a second dosing set for the other."),
+   ],
+   "products": ["multi-lane-stick-pack-machine", "multi-lane-4-side-seal-powder-packing-machine", "single-lane-sachet-powder-packing-machine", "premade-pouch-packing-machine", "granule-jar-filling-line"]},
+  {"slug": "spice-seasoning-powder-packing-solutions", "name": "Spice & Seasoning Powder Packing Machines", "img": "four-side-small",
+   "meta": "Spice and seasoning powder packing machines for chilli, curry, pepper, masala and noodle seasoning: sachets 5–100 g, pouches and bags, auger dosing with dust control.",
+   "lead": "Chilli powder, curry, black pepper, masala, cumin, garlic powder, chicken and noodle seasoning.",
+   "body": "Spice powders are fine, dusty and often oily, so they need servo auger dosing with an agitator, a closed hopper and dust extraction at the filling point. Small sachets for instant noodles and retail spice packs run on single-lane or multi-lane sachet machines; 100 g – 1 kg retail bags run on a vertical packing machine with auger filler; premium spice pouches run on a premade-pouch machine.",
+   "sections": [
+     ("Matching the machine to the spice pack", "<ul><li><strong>5–100 g sachets</strong>: single-lane FL-240B / 240T / 240Q (back, 3-side or 4-side seal), 25–40 bags/min.</li><li><strong>High-volume seasoning sachets</strong>: multi-lane 4-side seal FL-M500 / M700 / M980, up to 16 lanes.</li><li><strong>Pillow and gusset bags</strong>: auger powder VFFS FL-V420P / V520P, 5–70 bags/min.</li><li><strong>Zipper and stand-up pouches</strong>: 8-station premade-pouch machine FL-R200 / R250 / R350 with auger filler.</li><li><strong>Jars and cans</strong>: powder can filling line FL-PF, 10–30 cans/min.</li></ul>"),
+     ("Controlling dust and keeping seals clean", "<p>Fine powder that reaches the seal area causes weak or leaking seals. We use anti-drip augers, dust-suction ports and a short drop from filler to bag. Contact parts are SUS304; SUS316L is available for salty or corrosive blends.</p>"),
+   ],
+   "faq": [
+     ("How accurate is spice powder filling?", "Auger filling is typically within about ±1 % for fills above 100 g, and about ±1–2 g for small sachets, depending on the powder's density and how freely it flows."),
+     ("Can oily or sticky seasonings be packed?", "Yes. Oily blends such as hot-pot or curry powder need an agitator and sometimes a special screw design. Send a sample for a free test."),
+   ],
+   "products": ["single-lane-sachet-powder-packing-machine", "multi-lane-4-side-seal-powder-packing-machine", "auger-powder-vertical-packing-machine", "premade-pouch-packing-machine", "granule-jar-filling-line"]},
+  {"slug": "chips-snack-packing-solutions", "name": "Potato Chips & Puffed Snack Packing Machines", "img": "vffs-weigher",
+   "meta": "Potato chips and puffed snack packing machine: 10/14-head multihead weigher + VFFS, 30–70 bags/min, nitrogen flushing, pillow and gusset bags, check weigher and metal detector.",
+   "lead": "Potato chips, corn chips, puffed snacks, popcorn, extruded snacks, crackers and nuts.",
+   "body": "Chips and puffed snacks are light, bulky and fragile. The standard line is a Z-type bucket elevator feeding a 10- or 14-head multihead weigher mounted above a vertical form fill seal machine, followed by a check weigher, metal detector and collection table. Nitrogen flushing replaces oxygen in the bag, cushions the chips and extends shelf life.",
+   "sections": [
+     ("Recommended line", "<ol><li>Z-type bucket elevator (gentle lift, low breakage)</li><li>10-head or 14-head multihead weigher</li><li>VFFS bagger FL-420W / 620W / 820W with nitrogen flushing and date coder</li><li>Output conveyor, check weigher and metal detector</li><li>Rotary collection table or case packer</li></ol><p>FL-420W packs 100–1000 g at 30–70 bags/min; FL-620W 200–5000 g at 20–60 bags/min.</p>"),
+     ("Bag styles for snacks", "<p>Pillow (back-seal) bags are the most economical. Gusset and block-bottom bags stand better on the shelf. Linked bags with a hanging hole suit strip displays in small shops. Zipper doypacks for premium snacks run on a premade-pouch machine.</p>"),
+   ],
+   "faq": [
+     ("How do you reduce chip breakage?", "We use a low-speed bucket elevator, a weigher with adjustable vibration and gentle bucket opening, and keep the drop from the weigher to the bag as short as possible."),
+     ("Is nitrogen flushing necessary?", "For chips and other fried snacks it is strongly recommended. It slows oxidation, keeps the product crisp and gives a cushioned, full-looking bag."),
+   ],
+   "products": ["vffs-multihead-weigher-packing-machine", "vertical-form-fill-seal-packing-machine", "premade-pouch-packing-machine", "packing-machine-auxiliary-equipment"]},
 ]
+
 
 # ---------------------------------------------------------------
 GLOBAL_FAQ = [
@@ -603,6 +644,24 @@ GLOBAL_FAQ = [
 
 # ---------------------------------------------------------------
 POSTS = [
+  {
+    "slug": "packing-machine-price-factors",
+    "title": "How Much Does a Packing Machine Cost? 7 Factors That Set the Price",
+    "meta": "What decides packing machine price: product and dosing system, speed and lanes, bag type, accuracy, automation level, materials and options. Get an exact quote in 24 h.",
+    "date": "2026-11-09",
+    "img": "fl-cover",
+    "summary": "A packing machine's price is set mainly by the dosing system your product needs, the speed (number of lanes or bags per minute), the pack format, the automation around the machine, contact materials and options such as nitrogen flushing or check weighing.",
+    "body": [
+      ("1. Product and dosing system", "<p>The doser is often the most expensive part. A volumetric cup filler for sugar costs far less than a 14-head multihead weigher for chips; a servo auger for fine powder or a piston pump for thick sauce sits in between.</p>"),
+      ("2. Speed and number of lanes", "<p>On sachet and stick machines, price rises with lanes: a 2–4 lane FL-M500 costs less than a 4–16 lane FL-M980. On VFFS machines, bigger frames (FL-V730, FL-V900) and high-speed versions cost more.</p>"),
+      ("3. Pack format", "<p>Bags made from roll film (VFFS) need a simpler machine than rotary premade-pouch machines, which open and fill zipper, flat-bottom or spout pouches.</p>"),
+      ("4. Accuracy", "<p>Higher accuracy usually means more weighing heads, servo drives or load cells. For bulk 25 kg bags, a dual-speed weigher reaches ≤ ±0.1 %.</p>"),
+      ("5. Single machine or complete line", "<p>Elevators, weighers, check weighers, metal detectors, coders, boxing and palletising add to the price but cut labour. A semi-automatic bagging line suits up to about 5,000 bags/day; fully automatic lines suit 10,000+.</p>"),
+      ("6. Materials and standards", "<p>SUS304 contact parts are standard; SUS316L for salty, acidic or corrosive products, explosion-proof electrics for chemical plants and CE documentation all affect cost.</p>"),
+      ("7. Options and voltage", "<p>Nitrogen flushing, gusset devices, hanging holes, date coders, dust extraction and non-standard voltages (110 V, 415 V, 440 V) are priced as options.</p>"),
+      ("Get an exact price", "<p>Send your product, weight per pack, speed, pack type and voltage. We reply within 24 hours with a configuration and itemised quotation, and can test your sample free of charge.</p>"),
+    ],
+  },
   {
     "slug": "how-to-choose-a-packing-machine",
     "title": "How to Choose the Right Packing Machine: A 5-Step Buyer's Guide",
@@ -635,7 +694,7 @@ POSTS = [
   },
   {
     "slug": "multi-lane-stick-pack-machine-guide",
-    "title": "Multi-Lane Stick Pack & Sachet Machines: Lanes, Speed and Output Explained",
+    "title": "Multi-Lane Stick Pack Machines: Lanes, Speed & Output Explained",
     "meta": "How many lanes do you need? Multi-lane stick pack and sachet machine output, 3-side vs 4-side vs back seal, dosing options and film width explained with examples.",
     "date": "2026-11-06",
     "img": "ml-backseal",
