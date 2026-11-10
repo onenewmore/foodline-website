@@ -34,5 +34,5 @@ SITE = {
     "ga4_id": "",                                 # e.g. "G-XXXXXXX" (optional)
     "gsc_verification": "Kw0Ekz1OnfjNr2fJEOH_3IvDQDqApKTcwWfG01cfKCY",                       # Google Search Console meta token
     "bing_verification": "",
-    "lastmod": "2026-11-09",
+    "lastmod": "2026-11-10",
 }
