@@ -492,12 +492,14 @@ def build_blog():
 <div class="answer"><p><strong>Short answer:</strong> {E(a["summary"])}</p></div>
 {img_tag(pg, a["img"], a["title"], cls="cover", eager=True)}
 {secs}
+{("<h2>FAQ</h2>" + faq_html(a["faq"])) if a.get("faq") else ""}
 <p style="margin-top:32px"><a class="btn btn-primary" href="#quote">Ask an engineer</a></p></div></section></article>
 <section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
         schema = [crumbs_ld([("Home", ""), ("Blog", "blog/"), (a["title"], path + "/")]),
                   {"@type": "BlogPosting", "headline": a["title"], "description": a["meta"], "datePublished": a["date"], "dateModified": a["date"],
                    "author": {"@type": "Organization", "name": f"{B} engineering team", "url": D + "/about/"}, "publisher": {"@id": ORG_ID},
                    "image": url("assets/img/" + a["img"] + ".webp"), "mainEntityOfPage": url(path + "/")}]
+        if a.get("faq"): schema.append(faq_ld(a["faq"]))
         write(pg, layout(pg, f"{a['title']} | {B}", a["meta"], body, schema, active="blog", og_img=a["img"], og_type="article"))
 
 def build_misc():

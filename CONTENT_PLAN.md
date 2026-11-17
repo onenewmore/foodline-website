@@ -5,7 +5,6 @@ Target keyword = the phrase the page should rank for; use it in the H1/name, met
 Only use specs that exist in `data.py`. When published, move the line to the log with date and URL.
 
 ## Backlog (priority order)
-- [ ] G · `auger-filler-vs-cup-filler` · "auger filler vs volumetric cup filler" · which powders/granules suit each, accuracy, cost
 - [ ] A · `protein-powder-packing-solutions` · "protein powder packing machine" · sticks, zipper pouches, cans (multi-lane stick, premade pouch, powder can line)
 - [ ] A · `ketchup-sauce-sachet-packing-solutions` · "ketchup sachet packing machine" · multi-lane liquid stick, liquid VFFS, spout pouch
 - [ ] G · `10-head-vs-14-head-multihead-weigher` · "10 head vs 14 head multihead weigher"
@@ -46,3 +45,5 @@ Only use specs that exist in `data.py`. When published, move the line to the log
 | 2026-11-09 | CRO | Mobile WhatsApp/Quote bar, page-specific WhatsApp messages, click events for GA4 |
 | 2026-11-10 | A | /applications/sugar-stick-sachet-packing-solutions/ ("sugar stick packing machine") |
 | 2026-11-10 | Link | Coffee stick page → sugar stick page internal link |
+| 2026-11-17 | G | /blog/auger-filler-vs-cup-filler/ ("auger filler vs volumetric cup filler"); blog posts now render FAQ + FAQPage schema |
+| 2026-11-17 | Link/Meta | Sugar stick page + multi-lane stick guide → auger vs cup guide; chips page meta shortened to 157 chars |
