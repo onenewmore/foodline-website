@@ -37,7 +37,7 @@ GitHub Pages redeploys in 1–2 minutes.
 
 ## Adding content
 - **Application / landing page** → add a dict to `APPLICATIONS` in `data.py` with `slug, name, img, meta (≤160 chars), lead, body, sections [(h2, html)], faq [(q, a)], products [product slugs]`. `img` must be an existing file name in `assets/img/` without extension.
-- **Blog guide** → add a dict at the top of `POSTS` with `slug, title (≤65 chars), meta, date, img, summary, body [(h2, html)]`.
+- **Blog guide** → add a dict at the top of `POSTS` with `slug, title (the H1, and the document title when it fits), meta (70–170 chars), date, img, summary, body [(h2, html)], faq [(q, a)]`. Optional: `seo_title` when the `<title>` should differ from the H1, `callout` (HTML answer box used instead of the summary), `intro` (HTML between that box and the cover image). A body item with an empty heading renders HTML without an extra H2. A block containing `<table` is wrapped for horizontal scrolling.
 - **Product page** → add to `PRODUCTS` only when real specs and photos exist (ask the owner).
 - After adding, `./publish.sh` must report `0 errors`. Fix warnings about title length (>70) on new pages.
 
