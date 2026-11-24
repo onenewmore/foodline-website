@@ -113,12 +113,14 @@ a.card:hover{border-color:var(--accent);transform:translateY(-2px)}
 .facts dd{margin:2px 0 0;font-weight:700}
 @media (max-width:480px){.facts{grid-template-columns:1fr}.facts div:nth-child(odd){border-right:0}}
 .answer{border-left:4px solid var(--accent);background:var(--paper-2);padding:16px 20px;border-radius:0 var(--radius) var(--radius) 0;margin:0 0 24px}
+blockquote.answer{margin:0 0 24px}
 .answer p{margin:0}
 .prose{max-width:820px}
 .prose ul{padding-left:1.2em}.prose li{margin:.3em 0}
 .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);margin:16px 0;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;min-width:520px;font-size:.93rem;background:var(--card)}
-th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th,td{padding:11px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;overflow-wrap:break-word}
+table.compare{min-width:680px}
 thead th{background:var(--steel);color:#fff;font-family:var(--font-h)}
 tbody th{width:28%;color:var(--ink-2);font-weight:600;background:var(--paper-2)}
 tbody tr:last-child>*{border-bottom:0}

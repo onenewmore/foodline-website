@@ -20,7 +20,7 @@ To update: edit `config.py` / `data.py`, run `./publish.sh` (build + checks + re
 3. Google Search Console + Bing Webmaster Tools → verify → submit `https://your-domain/sitemap.xml`.
 
 ## What is built in
-**Pages (41 indexable):** home, products hub, 6 category pages, 13 product pages, applications hub + 9 industry pages, about, FAQ, contact, blog + 5 buying guides, privacy policy; thank-you (noindex), 404.
+**Pages (42 indexable):** home, products hub, 6 category pages, 13 product pages, applications hub + 9 industry pages, about, FAQ, contact, blog + 6 buying guides, privacy policy; thank-you (noindex), 404.
 
 **Technical SEO**
 - One H1 per page, unique `<title>` and meta description per page, keyword-led clean URLs

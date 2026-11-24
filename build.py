@@ -417,6 +417,10 @@ def build_product(p):
         related += [x for x in PRODUCTS if x["slug"] != p["slug"] and x not in related][:3 - len(related)]
     rel_cards = "".join(product_card(pg, x) for x in related)
     answer = f'{p["name"]} ({p["models"]}): ' + "; ".join(f"{k.lower()} {v}" for k, v in p["facts"]) + "."
+    guide_html = ""
+    rg = p.get("related_guide")
+    if rg:
+        guide_html = f'\n<p>See the <a href="{pg.rel("blog/"+rg["slug"])}">{E(rg["label"])}</a>.</p>'
     body = crumbs_html(pg, trail) + f'''
 <div class="wrap"><div class="p-top">
 <div class="p-media"><div class="main">{main_img}</div>{thumbs}</div>
@@ -430,7 +434,7 @@ def build_product(p):
 <h2>What it packs</h2><p>{E(p["applications"])}</p>
 <h2>Key features</h2><ul>{feats}</ul>
 {spec_table(p)}
-{"<h2>Options &amp; configurations</h2><p>"+E(p["options"])+"</p>" if p["options"] else ""}
+{"<h2>Options &amp; configurations</h2><p>"+E(p["options"])+"</p>" if p["options"] else ""}{guide_html}
 {video}
 <h2>FAQ about the {E(p["short"])}</h2>{faq_html(p["faq"])}
 </div></section>
@@ -525,6 +529,16 @@ def build_contact():
     write(pg, layout(pg, f"Contact {B} — Request a Packing Machine Quote", f"Contact {B} for a packing machine quotation: {CONTACT_TXT}. Reply within 24 hours with configuration, layout and price.", body,
           [crumbs_ld([("Home", ""), ("Contact", "contact/")]), {"@type": "ContactPage", "name": "Contact", "about": {"@id": ORG_ID}}], active="contact"))
 
+def post_sections(body):
+    """Render (heading, html) blocks. An empty heading emits HTML only, so a table or
+    lead paragraph can sit between sections. A block that contains a <table> is wrapped
+    for horizontal scrolling, matching the older 'table' in html check for existing posts."""
+    parts = []
+    for h, c in body:
+        block = f'<div class="tbl">{c}</div>' if "<table" in c else c
+        parts.append((f"<h2>{E(h)}</h2>" if h else "") + block)
+    return "".join(parts)
+
 def build_blog():
     pg = Page("blog")
     cards = "".join(f'''<a class="card" href="{pg.rel("blog/"+a["slug"])}"><div class="ph">{img_tag(pg, a["img"], a["title"])}</div><div class="bd"><span class="tag">Buying guide</span><h3>{E(a["title"])}</h3><p>{E(a["summary"])}</p><span class="more">Read →</span></div></a>''' for a in POSTS)
@@ -534,10 +548,15 @@ def build_blog():
           [crumbs_ld([("Home", ""), ("Blog", "blog/")])], active="blog"))
     for a in POSTS:
         path = "blog/" + a["slug"]; pg = Page(path)
-        secs = "".join(f"<h2>{E(h)}</h2>{(c if 'table' not in c else '<div class=\"tbl\">'+c+'</div>')}" for h, c in a["body"])
+        secs = post_sections(a["body"])
+        if a.get("callout"):
+            lead = a["callout"]
+        else:
+            lead = f'<div class="answer"><p><strong>Short answer:</strong> {E(a["summary"])}</p></div>'
+        intro = ("\n" + a["intro"]) if a.get("intro") else ""
         body = crumbs_html(pg, [("Home", ""), ("Blog", "blog"), (a["title"], path)]) + f'''<article class="article"><section><div class="wrap prose">
 <span class="tag">Buying guide</span><h1>{E(a["title"])}</h1><p class="muted">By the {E(B)} engineering team · Updated <time datetime="{a["date"]}">{a["date"]}</time></p>
-<div class="answer"><p><strong>Short answer:</strong> {E(a["summary"])}</p></div>
+{lead}{intro}
 {img_tag(pg, a["img"], a["title"], cls="cover", eager=True)}
 {secs}
 {("<h2>FAQ</h2>" + faq_html(a["faq"])) if a.get("faq") else ""}
@@ -548,7 +567,8 @@ def build_blog():
                    "author": {"@type": "Organization", "name": f"{B} engineering team", "url": D + "/about/"}, "publisher": {"@id": ORG_ID},
                    "image": url("assets/img/" + a["img"] + ".webp"), "mainEntityOfPage": url(path + "/")}]
         if a.get("faq"): schema.append(faq_ld(a["faq"]))
-        write(pg, layout(pg, f"{a['title']} | {B}", a["meta"], body, schema, active="blog", og_img=a["img"], og_type="article"))
+        doc_title = a.get("seo_title") or a["title"]
+        write(pg, layout(pg, f"{doc_title} | {B}", a["meta"], body, schema, active="blog", og_img=a["img"], og_type="article"))
 
 def build_misc():
     pg = Page("privacy-policy")
