@@ -20,7 +20,7 @@ To update: edit `config.py` / `data.py`, run `./publish.sh` (build + checks + re
 3. Google Search Console + Bing Webmaster Tools → verify → submit `https://your-domain/sitemap.xml`.
 
 ## What is built in
-**Pages (35 indexable):** home, products hub, 6 category pages, 13 product pages, applications hub + 5 industry pages, about, FAQ, contact, blog + 3 buying guides, privacy policy; thank-you (noindex), 404.
+**Pages (41 indexable):** home, products hub, 6 category pages, 13 product pages, applications hub + 9 industry pages, about, FAQ, contact, blog + 5 buying guides, privacy policy; thank-you (noindex), 404.
 
 **Technical SEO**
 - One H1 per page, unique `<title>` and meta description per page, keyword-led clean URLs
@@ -29,7 +29,7 @@ To update: edit `config.py` / `data.py`, run `./publish.sh` (build + checks + re
 - Spec tables as real HTML `<table>`, image `alt`, width/height, WebP, lazy loading → good Core Web Vitals
 - `sitemap.xml` with image entries, `robots.txt`, 404 page, cache headers (`_headers`)
 
-**Structured data (JSON-LD)**: Organization, WebSite, Product (+ additionalProperty specs), BreadcrumbList, FAQPage, VideoObject, ItemList / CollectionPage, BlogPosting, AboutPage, ContactPage.
+**Structured data (JSON-LD)**: Organization, WebSite, Product (+ additionalProperty specs, no prices), BreadcrumbList, FAQPage only where the page shows that FAQ, VideoObject, ItemList on the product and application hubs, CollectionPage, BlogPosting, AboutPage, ContactPage.
 
 **AI search / answer-engine (GEO) optimisation**
 - `robots.txt` explicitly allows GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended, Applebot-Extended and others
