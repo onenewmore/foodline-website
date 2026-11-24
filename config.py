@@ -22,9 +22,8 @@ SITE = {
     "employees": "[00]+",
     "export_countries": "[00]+",
     "lat": None, "lng": None,                    # factory GPS, optional
-    # Form handler: create a free form at formspree.io / web3forms.com / your CRM
-    # and paste the POST endpoint here. Until then the form falls back to email.
-    "form_endpoint": "",                          # "" = form sends the inquiry to WhatsApp
+    # Form handler. An empty string sends the inquiry to WhatsApp instead.
+    "form_endpoint": "https://formspree.io/f/xeagpnad",
     "social": {                                   # leave "" to hide
         "youtube": "",
         "linkedin": "",

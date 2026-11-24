@@ -155,12 +155,15 @@ def quote_form(pg, product="", heading="Get a free quote & machine recommendatio
 # - form_endpoint empty, or the POST fails → WhatsApp with the inquiry text (existing fallback).
 # - form_endpoint set and the POST succeeds → confirm in place. /thank-you/ stays the noindex
 #   page a form host can redirect to once an endpoint is configured. No endpoint is invented here.
+# - f.reset() restores hidden inputs to the HTML default (page starts as ""), so the page URL
+#   is stored as defaultValue and written back after a successful reset for a second submit.
 # gtag() runs only when window.gtag is a function, so an empty ga4_id cannot throw.
 FORM_JS = r"""<script>
 function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -185,6 +188,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -196,6 +200,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });

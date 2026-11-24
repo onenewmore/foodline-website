@@ -36,13 +36,13 @@
 <nav class="crumbs wrap" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../blog/">Blog</a></li><li aria-current="page">How Much Does a Packing Machine Cost? 7 Factors That Set the Price</li></ol></nav><article class="article"><section><div class="wrap prose">
 <span class="tag">Buying guide</span><h1>How Much Does a Packing Machine Cost? 7 Factors That Set the Price</h1><p class="muted">By the FOOD LINE engineering team · Updated <time datetime="2026-11-09">2026-11-09</time></p>
 <div class="answer"><p><strong>Short answer:</strong> A packing machine&#x27;s price is set mainly by the dosing system your product needs, the speed (number of lanes or bags per minute), the pack format, the automation around the machine, contact materials and options such as nitrogen flushing or check weighing.</p></div>
-<img src="../../assets/img/fl-cover.webp" alt="How Much Does a Packing Machine Cost? 7 Factors That Set the Price" width="1200" height="1108" fetchpriority="high" class="cover">
+<img src="../../assets/img/fl-cover.webp" alt="How Much Does a Packing Machine Cost? 7 Factors That Set the Price" width="800" height="800" fetchpriority="high" class="cover">
 <h2>1. Product and dosing system</h2><p>The doser is often the most expensive part. A volumetric cup filler for sugar costs far less than a 14-head multihead weigher for chips; a servo auger for fine powder or a piston pump for thick sauce sits in between.</p><h2>2. Speed and number of lanes</h2><p>On sachet and stick machines, price rises with lanes: a 2–4 lane FL-M500 costs less than a 4–16 lane FL-M980. On VFFS machines, bigger frames (FL-V730, FL-V900) and high-speed versions cost more.</p><h2>3. Pack format</h2><p>Bags made from roll film (VFFS) need a simpler machine than rotary premade-pouch machines, which open and fill zipper, flat-bottom or spout pouches.</p><h2>4. Accuracy</h2><p>Higher accuracy usually means more weighing heads, servo drives or load cells. For bulk 25 kg bags, a dual-speed weigher reaches ≤ ±0.1 %.</p><h2>5. Single machine or complete line</h2><p>Elevators, weighers, check weighers, metal detectors, coders, boxing and palletising add to the price but cut labour. A semi-automatic bagging line suits up to about 5,000 bags/day; fully automatic lines suit 10,000+.</p><h2>6. Materials and standards</h2><p>SUS304 contact parts are standard; SUS316L for salty, acidic or corrosive products, explosion-proof electrics for chemical plants and CE documentation all affect cost.</p><h2>7. Options and voltage</h2><p>Nitrogen flushing, gusset devices, hanging holes, date coders, dust extraction and non-standard voltages (110 V, 415 V, 440 V) are priced as options.</p><h2>Get an exact price</h2><p>Send your product, weight per pack, speed, pack type and voltage. We reply within 24 hours with a configuration and itemised quotation, and can test your sample free of charge.</p>
 
 <p style="margin-top:32px"><a class="btn btn-primary" href="#quote">Ask an engineer</a></p></div></section></article>
 <section style="padding-top:0"><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -56,7 +56,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -76,6 +76,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -100,6 +101,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -111,6 +113,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });
