@@ -36,13 +36,13 @@
 <nav class="crumbs wrap" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../blog/">Blog</a></li><li aria-current="page">VFFS vs Premade Pouch Packing Machine: Which Should You Buy?</li></ol></nav><article class="article"><section><div class="wrap prose">
 <span class="tag">Buying guide</span><h1>VFFS vs Premade Pouch Packing Machine: Which Should You Buy?</h1><p class="muted">By the FOOD LINE engineering team · Updated <time datetime="2026-11-06">2026-11-06</time></p>
 <div class="answer"><p><strong>Short answer:</strong> Choose VFFS for the lowest packaging cost and highest speed with pillow or gusset bags; choose a premade-pouch machine when you need zipper, flat-bottom or spout pouches and a premium retail look.</p></div>
-<img src="../../assets/img/premade-8-station.webp" alt="VFFS vs Premade Pouch Packing Machine: Which Should You Buy?" width="1072" height="688" fetchpriority="high" class="cover">
+<img src="../../assets/img/premade-8-station.webp" alt="VFFS vs Premade Pouch Packing Machine: Which Should You Buy?" width="800" height="800" fetchpriority="high" class="cover">
 <h2>The short answer</h2><p>A <strong>vertical form fill seal (VFFS)</strong> machine makes bags from roll film, so material cost per bag is low and speeds reach 50–70 bags/min. A <strong>premade pouch</strong> machine fills bags that are already made and printed — zipper doypacks, flat-bottom and spout pouches — at 16–50 bags/min, with a more premium shelf appearance.</p><h2>Side-by-side comparison</h2><div class="tbl"><table><thead><tr><th></th><th>VFFS</th><th>Premade pouch (8-station)</th></tr></thead><tbody><tr><td>Packaging material</td><td>Roll film (cheapest)</td><td>Premade pouches (higher cost)</td></tr><tr><td>Typical speed</td><td>20–70 bags/min</td><td>16–50 bags/min</td></tr><tr><td>Bag styles</td><td>Pillow, gusset, block-bottom, hanging hole</td><td>Zipper, stand-up, flat-bottom, spout, 3/4-side seal</td></tr><tr><td>Size changeover</td><td>Change forming collar</td><td>Adjust on touch screen</td></tr><tr><td>Footprint</td><td>Tall, compact base</td><td>Lower, wider</td></tr><tr><td>Best for</td><td>Snacks, frozen food, bulk, private label volume</td><td>Retail coffee, pet food, nuts, sauces, premium brands</td></tr></tbody></table></div><h2>When to choose VFFS</h2><p>High volumes, price-sensitive markets, frozen and bulk products, and when you can print roll film economically.</p><h2>When to choose premade pouch</h2><p>Resealable zipper packs, stand-up shelf presence, spout pouches for liquids, frequent SKU changes and smaller batches.</p>
 
 <p style="margin-top:32px"><a class="btn btn-primary" href="#quote">Ask an engineer</a></p></div></section></article>
 <section style="padding-top:0"><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -56,7 +56,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -76,6 +76,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -100,6 +101,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -111,6 +113,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });

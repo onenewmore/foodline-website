@@ -37,13 +37,13 @@
 <section style="padding-bottom:24px"><div class="wrap split"><div><h1>Premade Pouch (Rotary Doypack) Packing Machines</h1>
 <div class="answer"><p>8-station and 6-station rotary machines that pick, open, fill, seal and discharge zipper, stand-up, flat-bottom and spout pouches.</p></div><p>Premade pouch machines work with bags you already printed — zipper doypacks, flat-bottom, side-gusset or spout pouches — for a retail-grade shelf look. The rotary turret handles bag picking, printing, zipper opening, filling, nitrogen flushing and sealing automatically.</p>
 <a class="btn btn-primary" href="#quote">Ask for a recommendation</a></div>
-<div class="hero-img"><img src="../../assets/img/premade-8-station.webp" alt="Premade Pouch (Rotary Doypack) Packing Machines" width="1072" height="688" fetchpriority="high" class=""></div></div></section>
-<section class="alt" style="padding:40px 0"><div class="wrap"><h2>Models in this range</h2><div class="grid g3" style="margin-top:20px"><a class="card" href="../../products/premade-pouch-packing-machine/"><div class="ph"><img src="../../assets/img/premade-8-station.webp" alt="8-Station Rotary Premade Pouch Packing Machine" width="1072" height="688" loading="lazy" decoding="async" class=""></div>
+<div class="hero-img"><img src="../../assets/img/premade-8-station.webp" alt="Premade Pouch (Rotary Doypack) Packing Machines" width="800" height="800" fetchpriority="high" class=""></div></div></section>
+<section class="alt" style="padding:40px 0"><div class="wrap"><h2>Models in this range</h2><div class="grid g3" style="margin-top:20px"><a class="card" href="../../products/premade-pouch-packing-machine/"><div class="ph"><img src="../../assets/img/premade-8-station.webp" alt="8-Station Rotary Premade Pouch Packing Machine" width="800" height="800" loading="lazy" decoding="async" class=""></div>
 <div class="bd"><span class="tag">Premade Pouch / Doypack</span><h3>8-Station Premade Pouch Machine</h3><p>Picks, prints, opens, fills, seals and discharges your premade pouches — zipper doypacks, stand-up, flat, gusset and spout bags — for snacks, powders, liquids and pet food.</p><span class="more">View specs →</span></div></a></div>
 <h3 style="margin-top:36px">Quick comparison</h3><div class="tbl"><table><thead><tr><th>Machine</th><th>Models</th><th>Highlight</th><th>Highlight</th></tr></thead><tbody><tr><td><a href="../../products/premade-pouch-packing-machine/">8-Station Premade Pouch Machine</a></td><td>FL-R200 / FL-R250 / FL-R350</td><td><span class="muted">Speed:</span> 16–50 bags/min</td><td><span class="muted">Bag size:</span> W 80–350 × L 100–350 mm</td></tr></tbody></table></div></div></section>
 <section><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -57,7 +57,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -77,6 +77,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -101,6 +102,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -112,6 +114,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });

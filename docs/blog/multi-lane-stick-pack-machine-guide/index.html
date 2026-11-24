@@ -36,13 +36,13 @@
 <nav class="crumbs wrap" aria-label="Breadcrumb"><ol><li><a href="../../">Home</a></li><li><a href="../../blog/">Blog</a></li><li aria-current="page">Multi-Lane Stick Pack Machines: Lanes, Speed &amp; Output Explained</li></ol></nav><article class="article"><section><div class="wrap prose">
 <span class="tag">Buying guide</span><h1>Multi-Lane Stick Pack Machines: Lanes, Speed &amp; Output Explained</h1><p class="muted">By the FOOD LINE engineering team · Updated <time datetime="2026-11-06">2026-11-06</time></p>
 <div class="answer"><p><strong>Short answer:</strong> Output of a multi-lane machine = number of lanes × 20–40 cuts per minute. Pick the number of lanes from your daily target, then the seal style and dosing system from your product.</p></div>
-<img src="../../assets/img/ml-backseal.webp" alt="Multi-Lane Stick Pack Machines: Lanes, Speed &amp; Output Explained" width="545" height="993" fetchpriority="high" class="cover">
+<img src="../../assets/img/ml-backseal.webp" alt="Multi-Lane Stick Pack Machines: Lanes, Speed &amp; Output Explained" width="800" height="800" fetchpriority="high" class="cover">
 <h2>Output formula</h2><p><strong>Packs per minute = lanes × cuts per minute</strong> (20–40 per lane). A 4-lane machine therefore makes ~100–160 packs/min, a 10-lane ~250–400 and a 16-lane up to ~640.</p><h2>Seal styles</h2><ul><li><strong>Back seal (stick pack)</strong> — long, slim, centre seam. Coffee, sugar, supplements, honey.</li><li><strong>3-side seal</strong> — flat sachet with one folded edge. Seasonings, shampoo samples.</li><li><strong>4-side seal</strong> — flat sachet sealed on all sides, premium look. Medicine, seasoning, cosmetics.</li></ul><h2>Dosing by product</h2><p>Powder → long screw, short screw or screw + cup. Granules → volumetric cups. Liquid/paste → piston or ceramic pumps, optionally with a heated mixing tank. Not sure whether your product needs a screw or cups? See <a href="../auger-filler-vs-cup-filler/">auger filler vs volumetric cup filler</a>.</p><h2>Film width and lanes</h2><p>Film width ≈ (sachet width × 2 for back seal, or × 1 for 4-side seal) × lanes + trim. Example frames: 300/500 mm (2–4 lanes), 600/700 mm (3–10 lanes), 900/980 mm (4–16 lanes).</p><h2>Downstream automation</h2><p>Multi-lane machines can be linked to automatic counting, boxing and cartoning lines so finished sticks go straight into display boxes without manual handling.</p>
 
 <p style="margin-top:32px"><a class="btn btn-primary" href="#quote">Ask an engineer</a></p></div></section></article>
 <section style="padding-top:0"><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -56,7 +56,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -76,6 +76,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -100,6 +101,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -111,6 +113,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });

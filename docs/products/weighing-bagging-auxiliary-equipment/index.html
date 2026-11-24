@@ -37,14 +37,14 @@
 <section style="padding-bottom:24px"><div class="wrap split"><div><h1>Bulk Bagging Lines &amp; Auxiliary Equipment</h1>
 <div class="answer"><p>20–30 kg open-mouth bagging lines plus weighers, conveyors, check weighers, metal detectors, coders, air compressors and nitrogen generators.</p></div><p>Everything around the packing machine: multihead and linear weighers, Z-type bucket elevators, incline and screw conveyors, check weighers, metal detectors, date coders, laser markers, air compressors and nitrogen generators — plus semi-automatic and fully automatic 20–30 kg bagging lines.</p>
 <a class="btn btn-primary" href="#quote">Ask for a recommendation</a></div>
-<div class="hero-img"><img src="../../assets/img/large-powder.webp" alt="Bulk Bagging Lines &amp; Auxiliary Equipment" width="620" height="572" fetchpriority="high" class=""></div></div></section>
+<div class="hero-img"><img src="../../assets/img/large-powder.webp" alt="Bulk Bagging Lines &amp; Auxiliary Equipment" width="800" height="800" fetchpriority="high" class=""></div></div></section>
 <section class="alt" style="padding:40px 0"><div class="wrap"><h2>Models in this range</h2><div class="grid g3" style="margin-top:20px"><a class="card" href="../../products/25kg-granule-bagging-line/"><div class="ph"><div class="noimg">Photo coming soon</div></div>
-<div class="bd"><span class="tag">Bagging &amp; Auxiliary</span><h3>25 kg Bagging Line</h3><p>Bucket elevator → storage hopper → dual-speed weigher → automatic bag placer → sewing or heat sealing → conveyor, for 20–30 kg bags of feed, fertiliser, grain, sugar and plastic pellets.</p><span class="more">View specs →</span></div></a><a class="card" href="../../products/packing-machine-auxiliary-equipment/"><div class="ph"><img src="../../assets/img/large-powder.webp" alt="Weighers, Conveyors, Check Weighers &amp; Auxiliary Equipment" width="620" height="572" loading="lazy" decoding="async" class=""></div>
+<div class="bd"><span class="tag">Bagging &amp; Auxiliary</span><h3>25 kg Bagging Line</h3><p>Bucket elevator → storage hopper → dual-speed weigher → automatic bag placer → sewing or heat sealing → conveyor, for 20–30 kg bags of feed, fertiliser, grain, sugar and plastic pellets.</p><span class="more">View specs →</span></div></a><a class="card" href="../../products/packing-machine-auxiliary-equipment/"><div class="ph"><img src="../../assets/img/large-powder.webp" alt="Weighers, Conveyors, Check Weighers &amp; Auxiliary Equipment" width="800" height="800" loading="lazy" decoding="async" class=""></div>
 <div class="bd"><span class="tag">Bagging &amp; Auxiliary</span><h3>Auxiliary Equipment</h3><p>Complete the line: feeding, weighing, inspection, coding and utilities — supplied and tested together with your packing machine.</p><span class="more">View specs →</span></div></a></div>
 <h3 style="margin-top:36px">Quick comparison</h3><div class="tbl"><table><thead><tr><th>Machine</th><th>Models</th><th>Highlight</th><th>Highlight</th></tr></thead><tbody><tr><td><a href="../../products/25kg-granule-bagging-line/">25 kg Bagging Line</a></td><td>FL-B25S / FL-B25A</td><td><span class="muted">Bag weight:</span> 20–30 kg</td><td><span class="muted">Accuracy:</span> ≤ ±0.1 % (≤ ±25 g)</td></tr><tr><td><a href="../../products/packing-machine-auxiliary-equipment/">Auxiliary Equipment</a></td><td>FL auxiliary series</td><td><span class="muted">Weighers:</span> 10/14-head, 4-head &amp; 2-head linear</td><td><span class="muted">Elevators:</span> Z-type, incline, big-bucket, chain-bucket</td></tr></tbody></table></div></div></section>
 <section><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -58,7 +58,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -78,6 +78,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -102,6 +103,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -113,6 +115,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });

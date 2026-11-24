@@ -38,7 +38,7 @@
 <div class="answer"><p>FOOD LINE is a China-based manufacturer of automatic packing machines and complete packaging lines for food, beverage, pharmaceutical, daily-chemical and agricultural products.</p></div>
 <p>We design, build and test packing equipment for food, beverage, pharmaceutical, daily-chemical and agricultural products — multi-lane stick-pack and sachet machines, vertical form fill seal machines with weighers, augers and pumps, rotary premade-pouch machines, flow wrappers, filling and capping lines and 25 kg bagging lines.</p>
 <p>Every project starts with your product. We test samples on our machines, propose a configuration and layout, build to your voltage and standards, and run a factory acceptance test with your film or pouches before shipping.</p></div>
-<div class="hero-img"><img src="../assets/img/workshop.webp" alt="FOOD LINE packing machine assembly workshop" width="1521" height="1012" loading="lazy" decoding="async" class=""></div></div></section>
+<div class="hero-img"><img src="../assets/img/workshop.webp" alt="FOOD LINE packing machine assembly workshop" width="800" height="800" loading="lazy" decoding="async" class=""></div></div></section>
 <section class="alt"><div class="wrap"><h2>Why buyers choose us</h2><div class="grid g3" style="margin-top:20px">
 <div class="card"><div class="bd"><h3>Factory-direct</h3><p>Own design and assembly, so you get factory pricing, custom engineering and direct access to engineers.</p></div></div>
 <div class="card"><div class="bd"><h3>One-stop lines</h3><p>Feeding, weighing, packing, inspection, coding, boxing and utilities supplied and tested together.</p></div></div>
@@ -49,7 +49,7 @@
 </div></div></section>
 <section style="padding-top:0"><div class="wrap"><div class="quote" id="quote"><h2>Get a free quote &amp; machine recommendation</h2>
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
-<form class="inq" method="POST" action="#" data-wa="8618339295069" data-endpoint="">
+<form class="inq" method="POST" action="https://formspree.io/f/xeagpnad" data-wa="8618339295069" data-endpoint="1">
 <label>Your name *<input name="name" required autocomplete="name"></label>
 <label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
 <label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
@@ -63,7 +63,7 @@
 <label class="full">Voltage &amp; other requirements<textarea name="message" rows="4" placeholder="Voltage (e.g. 220V 1-phase / 380V 3-phase 50Hz), bag size, budget, delivery date, photos link…"></textarea></label>
 <input class="hp" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
 <input type="hidden" name="page" value="">
-<div class="full"><button class="btn btn-primary" type="submit">Send inquiry via WhatsApp</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
+<div class="full"><button class="btn btn-primary" type="submit">Send inquiry</button> <small>&nbsp;We reply within 24 h. Your data is only used to answer your inquiry.</small></div>
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div></div></section>
 </main>
@@ -83,6 +83,7 @@ function track(name, params){
  if(typeof window.gtag==='function') window.gtag('event', name, params||{});
 }
 document.querySelectorAll('form.inq').forEach(function(f){
+ f.page.defaultValue=location.href;
  f.page.value=location.href;
  function clearContactError(){
   var msg=f.querySelector('.form-msg');
@@ -107,6 +108,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
    return;
   }
   clearContactError();
+  f.page.value=location.href;
   var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
@@ -118,6 +120,7 @@ document.querySelectorAll('form.inq').forEach(function(f){
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
+     f.page.value=location.href;
      track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });
