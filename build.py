@@ -66,19 +66,72 @@ def ld(obj):
     return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False, separators=(",", ":")) + "</script>"
 
 ORG_ID = D + "/#organization"
+LOGO_URL = url("assets/logo.png")
+# build_txt() draws this file at 512×512. Google's logo guidance asks for at least 112×112.
+LOGO_PX = 512
+
 def org_ld():
-    o = {"@type": "Organization", "@id": ORG_ID, "name": B, "legalName": LEGAL, "url": D + "/",
-         "logo": url("assets/logo.png"), "telephone": SITE["phone"],
-         "address": ({"@type": "PostalAddress", "streetAddress": SITE["address"], "addressLocality": SITE["city"],
-                     "addressRegion": SITE["region"], "postalCode": SITE["postal"], "addressCountry": SITE["country"]} if has(SITE["address"]) else {"@type": "PostalAddress", "addressCountry": SITE["country"]}),
-         "contactPoint": [{"@type": "ContactPoint", "contactType": "sales", "telephone": SITE["phone"],
-                           "availableLanguage": ["English", "Chinese"], "areaServed": "Worldwide"}],
+    """Organization node shared by every page (same @id).
+
+    Only verified facts from config.py are included. The registered legal name,
+    street address, email and social profiles are still placeholders, so legalName,
+    PostalAddress, email and sameAs are omitted rather than published half-filled.
+    A country-only PostalAddress is an incomplete address and is not a substitute.
+    """
+    contact = {"@type": "ContactPoint", "contactType": "sales", "telephone": SITE["phone"],
+               "url": D + "/contact/", "availableLanguage": ["English", "Chinese"],
+               "areaServed": "Worldwide"}
+    if has(SITE["email"]):
+        contact["email"] = SITE["email"]
+    o = {"@type": ["Organization", "Manufacturer"], "@id": ORG_ID, "name": B, "url": D + "/",
+         "logo": {"@type": "ImageObject", "url": LOGO_URL, "contentUrl": LOGO_URL,
+                  "width": LOGO_PX, "height": LOGO_PX},
+         "image": LOGO_URL, "telephone": SITE["phone"], "contactPoint": contact,
          "description": f"{B} designs and manufactures automatic packing machines and complete packaging lines for powder, granules, liquids and solid products.",
-         **({"foundingDate": SITE["founded"]} if has(SITE["founded"]) else {}),
+         "areaServed": "Worldwide",
          "knowsAbout": ["packing machine", "vertical form fill seal machine", "multihead weigher", "stick pack machine", "sachet packing machine", "premade pouch packing machine", "flow wrap machine", "filling and capping line"]}
+    # legalName is only for a registered name that differs from the brand.
+    if has(SITE["legal_name"]) and SITE["legal_name"] != B:
+        o["legalName"] = SITE["legal_name"]
+    if has(SITE["address"]):
+        o["address"] = {"@type": "PostalAddress", "streetAddress": SITE["address"], "addressLocality": SITE["city"],
+                        "addressRegion": SITE["region"], "postalCode": SITE["postal"], "addressCountry": SITE["country"]}
+    if has(SITE["email"]):
+        o["email"] = SITE["email"]
+    if has(SITE["founded"]):
+        o["foundingDate"] = SITE["founded"]
     same = [v for v in SITE["social"].values() if v]
-    if same: o["sameAs"] = same
+    if same:
+        o["sameAs"] = same
     return o
+
+def product_model_ld(p, full=False):
+    """Datasheet for one machine family. Not a Google Product snippet.
+
+    Google product snippets require @type Product plus offers (a real numeric
+    price), review, or aggregateRating. This catalogue is quote-only: there is
+    no public price, and price 0 would mean the machine is free. Reviews and
+    ratings are not published. Google does not treat schema.org subtypes as
+    Product snippets unless Product is also declared, so the node is a
+    ProductModel (a vendor specification) and never a Product.
+    """
+    path = "products/" + p["slug"] + "/"
+    node = {"@type": "ProductModel", "@id": url(path) + "#product", "name": p["name"],
+            "description": p["lead"], "sku": p["models"], "mpn": p["models"], "model": p["models"],
+            "category": CAT[p["cat"]]["name"], "brand": {"@type": "Brand", "name": B},
+            "manufacturer": {"@id": ORG_ID}, "url": url(path)}
+    imgs = ([p["img"]] + list(p.get("gallery") or [])) if p.get("img") else []
+    if not full:
+        imgs = imgs[:1]
+    if imgs:
+        node["image"] = [url("assets/img/" + n + ".webp") for n in imgs]
+    if full:
+        node["additionalProperty"] = [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["facts"]]
+    return node
+
+def model_list_item(p, i):
+    return {"@type": "ListItem", "position": i + 1, "name": p["name"],
+            "url": url("products/" + p["slug"] + "/"), "item": product_model_ld(p)}
 
 def crumbs_ld(items):
     return {"@type": "BreadcrumbList", "itemListElement": [
@@ -344,7 +397,7 @@ def build_home():
     schema = [{"@type": "WebSite", "@id": D + "/#website", "url": D + "/", "name": B, "publisher": {"@id": ORG_ID}, "inLanguage": "en"},
               faq_ld(faqs)]
     write(pg, layout(pg, f"Automatic Packing Machine Manufacturer in China | {B}",
-          f"{B}: sachet, stick pack, VFFS, premade pouch, flow wrap and filling machines for powder, granules, liquids and snacks. Free sample test, factory price.",
+          f"{B} builds sachet, stick-pack, VFFS, pouch, flow-wrap and filling machines for powder, granules, liquids and snacks. Free sample test and quote.",
           body, schema))
 
 def build_products_hub():
@@ -359,9 +412,10 @@ def build_products_hub():
 <div class="answer"><p>{E(B)} supplies {len(PRODUCTS)} packing machine families in {len(CATEGORIES)} categories: multi-lane sachet and stick-pack machines, vertical form fill seal (VFFS) machines, premade-pouch machines, horizontal flow wrappers, bottle filling lines and 25 kg bagging lines with auxiliary equipment.</p></div></div></section>
 {blocks}<section><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [crumbs_ld([("Home", ""), ("Products", "products/")]),
-              {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url("products/" + p["slug"] + "/"), "name": p["name"]} for i, p in enumerate(PRODUCTS)]}]
+              {"@type": "ItemList", "name": "Packing machines", "numberOfItems": len(PRODUCTS),
+               "itemListElement": [model_list_item(p, i) for i, p in enumerate(PRODUCTS)]}]
     write(pg, layout(pg, f"Packing Machines: Sachet, VFFS, Pouch, Flow Wrap & Filling | {B}",
-          "Automatic packing machines: multi-lane stick pack, sachet, VFFS with weigher, auger powder, liquid, premade pouch, flow wrap, filling lines and 25 kg bagging.",
+          "Automatic packing machines: stick pack, sachet, VFFS, auger powder, liquid, premade pouch, flow wrap, bottle filling lines and 25 kg bagging.",
           body, schema, active="products"))
 
 def build_category(c):
@@ -378,9 +432,10 @@ def build_category(c):
 <h3 style="margin-top:36px">Quick comparison</h3><div class="tbl"><table><thead><tr><th>Machine</th><th>Models</th><th>Highlight</th><th>Highlight</th></tr></thead><tbody>{rows}</tbody></table></div></div></section>
 <section><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [crumbs_ld([("Home", ""), ("Products", "products/"), (c["short"], "products/" + c["slug"] + "/")]),
-              {"@type": "CollectionPage", "name": c["name"], "description": c["summary"],
-               "mainEntity": {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url("products/" + p["slug"] + "/"), "name": p["name"]} for i, p in enumerate(items)]}}]
-    write(pg, layout(pg, f"{c['name']} | {B}", c["summary"][:158], body, schema, active="products", og_img=c["img"] or "fl-cover"))
+              {"@type": "CollectionPage", "name": c["name"], "description": c.get("meta") or c["summary"],
+               "mainEntity": {"@type": "ItemList", "name": c["name"], "numberOfItems": len(items),
+                              "itemListElement": [model_list_item(p, i) for i, p in enumerate(items)]}}]
+    write(pg, layout(pg, f"{c['name']} | {B}", c.get("meta") or c["summary"], body, schema, active="products", og_img=c["img"] or "fl-cover"))
 
 def spec_table(p):
     s = p.get("specs")
@@ -440,20 +495,17 @@ def build_product(p):
 </div></section>
 <section><div class="wrap"><h2>Related machines</h2><div class="grid g3" style="margin-top:20px">{rel_cards}</div></div></section>
 <section style="padding-top:0"><div class="wrap">{quote_form(pg, p["name"], "Get a quote for the " + p["short"])}</div></section>'''
-    props = [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["facts"]]
-    prod = {"@type": "Product", "@id": url(path + "/") + "#product", "name": p["name"], "description": p["lead"],
-            "sku": p["models"], "mpn": p["models"], "model": p["models"], "category": c["name"],
-            "brand": {"@type": "Brand", "name": B}, "manufacturer": {"@id": ORG_ID}, "additionalProperty": props,
-            "url": url(path + "/")}
-    if p["img"]:
-        prod["image"] = [url("assets/img/" + n + ".webp") for n in imgs]
+    prod = product_model_ld(p, full=True)
     schema = [prod, crumbs_ld([(n, (x + "/" if x else "")) for n, x in trail]), faq_ld(p["faq"])]
     if p.get("video"):
         v = p["video"]
-        schema.append({"@type": "VideoObject", "name": v["title"], "description": v["desc"],
+        vid = url(path + "/") + "#video"
+        schema.append({"@type": "VideoObject", "@id": vid, "name": v["title"], "description": v["desc"],
                        "thumbnailUrl": url("assets/img/" + v["poster"] + ".webp"), "contentUrl": url("assets/video/" + v["file"]),
                        "uploadDate": SITE["lastmod"], "duration": v["duration"], "publisher": {"@id": ORG_ID}})
-        prod["subjectOf"] = {"@type": "VideoObject", "name": v["title"]}
+        # Point at the complete VideoObject. A name-only VideoObject fails Google's
+        # required thumbnailUrl and uploadDate checks.
+        prod["subjectOf"] = {"@id": vid}
     write(pg, layout(pg, f"{p['short']} | {p['models']} | {B}", p["meta"], body, schema, active="products", og_img=p["img"] or "fl-cover", og_type="product"))
 
 def build_applications():
@@ -504,7 +556,7 @@ def build_about():
 <div class="card"><div class="bd"><h3>After-sales support</h3><p>18-month warranty, engineers for on-site installation and training, spare parts in stock, lifetime technical support.</p></div></div>
 </div></div></section>
 <section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
-    write(pg, layout(pg, f"About {B} — Packing Machine Manufacturer in China", f"About {B}: China packing machine manufacturer and line integrator. Factory-direct, free sample testing, SUS304 build, installation and support worldwide.", body,
+    write(pg, layout(pg, f"About {B} — Packing Machine Manufacturer in China", f"About {B}, a China packing-machine manufacturer and line integrator. Factory-direct quotes, free sample testing, SUS304 build and worldwide support.", body,
           [crumbs_ld([("Home", ""), ("About", "about/")]), {"@type": "AboutPage", "name": f"About {B}", "about": {"@id": ORG_ID}}], active="about"))
 
 def build_faq():
@@ -544,7 +596,7 @@ def build_blog():
     cards = "".join(f'''<a class="card" href="{pg.rel("blog/"+a["slug"])}"><div class="ph">{img_tag(pg, a["img"], a["title"])}</div><div class="bd"><span class="tag">Buying guide</span><h3>{E(a["title"])}</h3><p>{E(a["summary"])}</p><span class="more">Read →</span></div></a>''' for a in POSTS)
     body = crumbs_html(pg, [("Home", ""), ("Blog", "blog")]) + f'''<section><div class="wrap"><h1>Packing Machine Buying Guides</h1><p class="muted prose">Practical guides from our engineers on choosing, comparing and running packing machines.</p>
 <div class="grid g3" style="margin-top:24px">{cards}</div></div></section>'''
-    write(pg, layout(pg, f"Packing Machine Buying Guides & Articles | {B}", "Engineer-written guides on choosing a packing machine, VFFS vs premade pouch, multi-lane stick pack machines and more.", body,
+    write(pg, layout(pg, f"Packing Machine Buying Guides & Articles | {B}", "Engineer-written guides on choosing a packing machine, VFFS versus premade pouches, multi-lane stick packs, dosing and what sets the price.", body,
           [crumbs_ld([("Home", ""), ("Blog", "blog/")])], active="blog"))
     for a in POSTS:
         path = "blog/" + a["slug"]; pg = Page(path)
@@ -577,7 +629,7 @@ def build_misc():
 <p>We do not sell your data. Form submissions are processed by our form provider and stored in our email/CRM system. We may use analytics cookies (Google Analytics) to understand site usage; you can block cookies in your browser.</p>
 <p>You may ask us to access, correct or delete your data at any time by messaging us on WhatsApp at {E(SITE["phone"])}.</p>
 </div></section>'''
-    write(pg, layout(pg, f"Privacy Policy | {B}", f"How {B} handles data submitted through inquiry forms, email and WhatsApp.", body, active=""))
+    write(pg, layout(pg, f"Privacy Policy | {B}", f"How {B} uses details from inquiry forms, email and WhatsApp only to quote and support packing machines, and how to ask us to access or delete them.", body, active=""))
     # thank-you (noindex)
     pg = Page("thank-you")
     write(pg, layout(pg, f"Thank you | {B}", "Inquiry received.", f'<section><div class="wrap prose"><h1>Thank you — inquiry received</h1><p>An engineer will reply within 24 hours. For faster contact, message us on <a href="https://wa.me/{SITE["whatsapp"]}">WhatsApp</a>.</p><p><a class="btn btn-primary" href="{pg.rel("products")}">Back to products</a></p></div></section>', noindex=True))
