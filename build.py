@@ -4,7 +4,7 @@
     python3 build.py            -> ./dist      (production: clean URLs, upload to your host)
     python3 build.py --preview  -> ./preview   (links point to index.html, for local/file preview)
 """
-import os, sys, json, shutil, html
+import os, sys, json, shutil, html, re, struct, zlib
 from config import SITE
 from data import CATEGORIES, PRODUCTS, APPLICATIONS, GLOBAL_FAQ, POSTS
 
@@ -135,9 +135,10 @@ def quote_form(pg, product="", heading="Get a free quote & machine recommendatio
 <p>Tell us your product, pack weight and speed. An engineer replies within 24 hours with a recommended configuration, layout and price. Free product testing with video.</p>
 <form class="inq" method="POST" action="{SITE["form_endpoint"] or "#"}" data-wa="{SITE["whatsapp"]}" data-endpoint="{"1" if has(SITE["form_endpoint"]) else ""}">
 <label>Your name *<input name="name" required autocomplete="name"></label>
-<label>Email<input type="email" name="email" autocomplete="email"></label>
-<label>WhatsApp / phone<input name="phone" autocomplete="tel"></label>
+<label>Email<input type="email" name="email" autocomplete="email" inputmode="email" aria-describedby="contact-hint"></label>
+<label>WhatsApp / phone<input type="tel" name="phone" autocomplete="tel" inputmode="tel" aria-describedby="contact-hint"></label>
 <label>Country *<input name="country" required autocomplete="country-name"></label>
+<p class="full hint" id="contact-hint">Please enter an email address or a WhatsApp / phone number — we need at least one so we can reply.</p>
 <label class="full">Machine of interest<select name="machine"><option value="">Not sure — please recommend</option>{opts}</select></label>
 <label>Product to pack *<input name="product" required placeholder="e.g. coffee powder, peanuts, ketchup"></label>
 <label>Weight / volume per pack<input name="pack_weight" placeholder="e.g. 10 g, 500 g, 1 kg, 30 ml"></label>
@@ -150,35 +151,65 @@ def quote_form(pg, product="", heading="Get a free quote & machine recommendatio
 <div class="form-msg" role="status" aria-live="polite"></div>
 </form></div>'''
 
+# Inquiry submit:
+# - form_endpoint empty, or the POST fails → WhatsApp with the inquiry text (existing fallback).
+# - form_endpoint set and the POST succeeds → confirm in place. /thank-you/ stays the noindex
+#   page a form host can redirect to once an endpoint is configured. No endpoint is invented here.
+# gtag() runs only when window.gtag is a function, so an empty ga4_id cannot throw.
 FORM_JS = r"""<script>
+function track(name, params){
+ if(typeof window.gtag==='function') window.gtag('event', name, params||{});
+}
 document.querySelectorAll('form.inq').forEach(function(f){
  f.page.value=location.href;
+ function clearContactError(){
+  var msg=f.querySelector('.form-msg');
+  msg.textContent=''; msg.className='form-msg';
+  f.email.classList.remove('is-invalid'); f.phone.classList.remove('is-invalid');
+  f.email.removeAttribute('aria-invalid'); f.phone.removeAttribute('aria-invalid');
+ }
+ f.addEventListener('input',function(){
+  if(!f.querySelector('.form-msg').classList.contains('is-error')) return;
+  if(f.email.value.trim()||f.phone.value.trim()) clearContactError();
+ });
  f.addEventListener('submit',function(e){
   e.preventDefault(); if(f._gotcha.value) return;
-  var msg=f.querySelector('.form-msg'), d=new FormData(f);
+  var msg=f.querySelector('.form-msg'), email=f.email.value.trim(), phone=f.phone.value.trim();
+  f.email.value=email; f.phone.value=phone;
+  if(!email && !phone){
+   msg.className='form-msg is-error';
+   msg.textContent='Please enter an email address or a WhatsApp / phone number so we can reply.';
+   f.email.classList.add('is-invalid'); f.phone.classList.add('is-invalid');
+   f.email.setAttribute('aria-invalid','true'); f.phone.setAttribute('aria-invalid','true');
+   f.email.focus();
+   return;
+  }
+  clearContactError();
+  var d=new FormData(f);
   var toWA=function(){var lab={name:'Name',email:'Email',phone:'Phone',country:'Country',machine:'Machine',product:'Product',pack_weight:'Pack weight',speed:'Speed',pack_type:'Pack type',message:'Notes',page:'Page'};
     var t='Hello, I would like a quote.\n';d.forEach(function(v,k){if(v&&lab[k])t+=lab[k]+': '+v+'\n'});
     msg.textContent='Opening WhatsApp… If nothing happens, message us at +'+f.dataset.wa+'.';
-    if(window.gtag)gtag('event','generate_lead',{method:'whatsapp'});
+    track('generate_lead',{method:'whatsapp'});
     window.location.href='https://wa.me/'+f.dataset.wa+'?text='+encodeURIComponent(t);};
   var fallback=toWA;
   if(!f.dataset.endpoint){toWA();return;}
   msg.textContent='Sending…';
   fetch(f.action,{method:'POST',body:d,headers:{'Accept':'application/json'}}).then(function(r){
    if(r.ok){msg.textContent='Thank you! We will reply within 24 hours.';f.reset();
-     if(window.gtag)gtag('event','generate_lead');}
+     track('generate_lead');}
    else{fallback();}}).catch(fallback);
  });
 });
-document.addEventListener('click',function(e){var a=e.target.closest('a');if(!a||!window.gtag)return;
- if(a.href.indexOf('wa.me/')>-1){gtag('event','whatsapp_click',{link_location:a.dataset.track||'inline'});}
- else if(a.getAttribute('href')&&a.getAttribute('href').indexOf('#quote')>-1){gtag('event','quote_cta_click',{link_location:a.dataset.track||'inline'});}});
+document.addEventListener('click',function(e){
+ var t=e.target, a=t.closest?t.closest('a'):null; if(!a) return;
+ if(a.href&&a.href.indexOf('wa.me/')>-1){track('whatsapp_click',{link_location:a.dataset.track||'inline'});}
+ else if(a.getAttribute('href')&&a.getAttribute('href').indexOf('#quote')>-1){track('quote_cta_click',{link_location:a.dataset.track||'inline'});}});
 document.querySelectorAll('.thumbs button').forEach(function(b){b.addEventListener('click',function(){
  var m=document.querySelector('.p-media .main img');m.src=b.dataset.src;m.alt=b.dataset.alt;
  document.querySelectorAll('.thumbs button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});});});
 </script>"""
 
-def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_type="website", noindex=False):
+def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_type="website", noindex=False, canonical=True):
     canon = url(pg.path + "/" if pg.path else "")
     parts = title.split(" | ")
     while len(" | ".join(parts)) > 65 and len(parts) > 2:
@@ -197,6 +228,16 @@ def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_
     robots = "noindex,follow" if noindex else "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
     if not noindex:
         SITEMAP.append((canon, og_img))
+    # 404.html is served for missing URLs, so a canonical (or og:url) of /404/ is itself a 404.
+    if canonical:
+        canon_tags = f'<link rel="canonical" href="{canon}">\n<link rel="alternate" hreflang="en" href="{canon}">\n<link rel="alternate" hreflang="x-default" href="{canon}">\n'
+        og_url = f'<meta property="og:url" content="{canon}">'
+    else:
+        canon_tags = ""
+        og_url = ""
+    icons = f'''<link rel="icon" href="{pg.rel("favicon.ico")}" sizes="16x16 32x32 48x48">
+<link rel="icon" href="{pg.rel("assets/favicon.svg")}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{pg.rel("apple-touch-icon.png")}" sizes="180x180">'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -205,16 +246,13 @@ def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_
 <title>{E(title)}</title>
 <meta name="description" content="{E(desc)}">
 <meta name="robots" content="{robots}">
-<link rel="canonical" href="{canon}">
-<link rel="alternate" hreflang="en" href="{canon}">
-<link rel="alternate" hreflang="x-default" href="{canon}">
-<meta property="og:type" content="{og_type}"><meta property="og:site_name" content="{E(B)}">
+{canon_tags}<meta property="og:type" content="{og_type}"><meta property="og:site_name" content="{E(B)}">
 <meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}">
-<meta property="og:url" content="{canon}"><meta property="og:image" content="{url("assets/img/"+og_img+".webp")}">
+{og_url}<meta property="og:image" content="{url("assets/img/"+og_img+".webp")}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1d3346">
 {ver}
-<link rel="icon" href="{pg.rel("assets/favicon.svg")}" type="image/svg+xml">
+{icons}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{pg.rel("assets/style.css")}">
@@ -301,7 +339,7 @@ def build_home():
     schema = [{"@type": "WebSite", "@id": D + "/#website", "url": D + "/", "name": B, "publisher": {"@id": ORG_ID}, "inLanguage": "en"},
               faq_ld(faqs)]
     write(pg, layout(pg, f"Automatic Packing Machine Manufacturer in China | {B}",
-          f"{B}: sachet, stick pack, VFFS, premade pouch, flow wrap & filling machines for powder, granules, liquid and snacks. Free sample test, factory price, global installation.",
+          f"{B}: sachet, stick pack, VFFS, premade pouch, flow wrap and filling machines for powder, granules, liquids and snacks. Free sample test, factory price.",
           body, schema))
 
 def build_products_hub():
@@ -318,7 +356,7 @@ def build_products_hub():
     schema = [crumbs_ld([("Home", ""), ("Products", "products/")]),
               {"@type": "ItemList", "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url("products/" + p["slug"] + "/"), "name": p["name"]} for i, p in enumerate(PRODUCTS)]}]
     write(pg, layout(pg, f"Packing Machines: Sachet, VFFS, Pouch, Flow Wrap & Filling | {B}",
-          "Full range of automatic packing machines: multi-lane stick pack, sachet, VFFS with weigher, auger powder, liquid, premade pouch, flow wrap, filling lines and 25 kg bagging.",
+          "Automatic packing machines: multi-lane stick pack, sachet, VFFS with weigher, auger powder, liquid, premade pouch, flow wrap, filling lines and 25 kg bagging.",
           body, schema, active="products"))
 
 def build_category(c):
@@ -413,10 +451,15 @@ def build_applications():
     pg = Page("applications")
     cards = "".join(f'''<a class="card" href="{pg.rel("applications/"+a["slug"])}"><div class="ph">{img_tag(pg, a["img"], a["name"])}</div><div class="bd"><h3>{E(a["name"])}</h3><p>{E(a["lead"])}</p><span class="more">See solutions →</span></div></a>''' for a in APPLICATIONS)
     body = crumbs_html(pg, [("Home", ""), ("Applications", "applications")]) + f'''<section><div class="wrap"><h1>Packaging Solutions by Product</h1>
-<div class="answer prose"><p>Pick your product type to see which packing machines, dosing systems and pack formats fit — powder, snacks and granules, liquids and sauces, bakery and candy, or frozen food.</p></div>
+<div class="answer prose"><p>Pick your product to see which packing machines, dosing systems and pack formats fit — powder, snacks and granules, liquids and sauces, bakery and candy, frozen food, coffee and milk tea, spices, chips and sugar.</p></div>
 <div class="grid g4" style="margin-top:24px">{cards}</div></div></section><section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
-    write(pg, layout(pg, f"Packaging Solutions by Industry & Product | {B}", "Packing machine solutions for powder, snacks & granules, liquid & sauce, bakery & candy, and frozen food — dosing systems, pack formats and complete lines.", body,
-          [crumbs_ld([("Home", ""), ("Applications", "applications/")])], active="applications"))
+    schema = [crumbs_ld([("Home", ""), ("Applications", "applications/")]),
+              {"@type": "ItemList", "name": "Packaging solutions by product", "numberOfItems": len(APPLICATIONS),
+               "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": a["name"],
+                                    "url": url("applications/" + a["slug"] + "/")} for i, a in enumerate(APPLICATIONS)]}]
+    write(pg, layout(pg, f"Packaging Solutions by Industry & Product | {B}",
+          "Packing machine solutions by product: powder, snacks, liquids, bakery, frozen food, coffee sticks, spices, chips and sugar. Dosing, pack formats and lines.",
+          body, schema, active="applications"))
     for a in APPLICATIONS:
         path = "applications/" + a["slug"]; pg = Page(path)
         cards = "".join(product_card(pg, PROD[s]) for s in a["products"])
@@ -463,7 +506,7 @@ def build_faq():
 <h2>Ordering &amp; service</h2>{faq_html(GLOBAL_FAQ)}
 <h2>Choosing a machine</h2>{faq_html([q for p in PRODUCTS for q in p["faq"]])}</div></section>
 <section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
-    write(pg, layout(pg, f"Packing Machine FAQ: Price, Lead Time, Voltage, Warranty | {B}", "Frequently asked questions about buying packing machines from China: quotation details, free testing, voltage, lead time, payment, installation, warranty and machine selection.", body,
+    write(pg, layout(pg, f"Packing Machine FAQ: Price, Lead Time, Voltage, Warranty | {B}", "Questions about buying packing machines from China: quotations, free testing, voltage, lead time, payment, installation, warranty and machine selection.", body,
           [crumbs_ld([("Home", ""), ("FAQ", "faq/")]), faq_ld(allq)], active="faq"))
 
 def build_contact():
@@ -513,12 +556,197 @@ def build_misc():
     # thank-you (noindex)
     pg = Page("thank-you")
     write(pg, layout(pg, f"Thank you | {B}", "Inquiry received.", f'<section><div class="wrap prose"><h1>Thank you — inquiry received</h1><p>An engineer will reply within 24 hours. For faster contact, message us on <a href="https://wa.me/{SITE["whatsapp"]}">WhatsApp</a>.</p><p><a class="btn btn-primary" href="{pg.rel("products")}">Back to products</a></p></div></section>', noindex=True))
-    # 404
-    pg = Page("")
-    html404 = layout(Page("404"), f"Page not found | {B}", "Page not found.", f'<section><div class="wrap prose"><h1>Page not found</h1><p>The page may have moved. Try our <a href="/products/">packing machines</a> or <a href="/contact/">contact us</a>.</p></div></section>', noindex=True)
+    # 404 — noindex, and no canonical: GitHub Pages serves this file for unknown URLs,
+    # so a canonical of /404/ would point at a URL that 404s.
+    html404 = layout(Page("404"), f"Page not found | {B}", "This page is not available. Browse FOOD LINE packing machines or contact us for a quotation.", f'<section><div class="wrap prose"><h1>Page not found</h1><p>The page may have moved. Try our <a href="/products/">packing machines</a> or <a href="/contact/">contact us</a>.</p></div></section>', noindex=True, canonical=False)
     with open(os.path.join(OUT, "404.html"), "w", encoding="utf-8") as f:
         f.write(html404.replace('href="../', 'href="/').replace('src="../', 'src="/'))
     shutil.rmtree(os.path.join(OUT, "404"), ignore_errors=True)
+
+# ---------------------------------------------------------------- icons (from assets/favicon.svg)
+def _hex_rgb(value):
+    s = value.strip().lower()
+    if s in ("#fff", "#ffffff", "white"):
+        return (255, 255, 255)
+    if s.startswith("#") and len(s) == 4:
+        return tuple(int(c * 2, 16) for c in s[1:])
+    if s.startswith("#") and len(s) == 7:
+        return tuple(int(s[i:i + 2], 16) for i in (1, 3, 5))
+    raise ValueError(f"unsupported fill color {value}")
+
+def _path_polygons(d):
+    tokens = re.findall(r"[MmLlHhVvZz]|[-+]?(?:\d*\.\d+|\d+)", d)
+    polys, poly = [], []
+    i = cx = cy = sx = sy = 0
+    cmd = None
+    def take():
+        nonlocal i
+        v = float(tokens[i]); i += 1
+        return v
+    while i < len(tokens):
+        t = tokens[i]
+        if re.fullmatch(r"[MmLlHhVvZz]", t):
+            cmd = t; i += 1
+        if cmd in ("M", "m"):
+            x, y = take(), take()
+            if cmd == "m":
+                x += cx; y += cy
+            if len(poly) > 1:
+                polys.append(poly)
+            poly = [(x, y)]
+            cx, cy = sx, sy = x, y
+            cmd = "L" if cmd == "M" else "l"
+        elif cmd in ("L", "l"):
+            x, y = take(), take()
+            if cmd == "l":
+                x += cx; y += cy
+            poly.append((x, y)); cx, cy = x, y
+        elif cmd in ("H", "h"):
+            x = take()
+            if cmd == "h":
+                x += cx
+            poly.append((x, cy)); cx = x
+        elif cmd in ("V", "v"):
+            y = take()
+            if cmd == "v":
+                y += cy
+            poly.append((cx, y)); cy = y
+        elif cmd in ("Z", "z"):
+            if poly and poly[0] != poly[-1]:
+                poly.append(poly[0])
+            if poly:
+                polys.append(poly)
+            poly = []
+            cx, cy = sx, sy
+        else:
+            raise ValueError(f"unsupported path command {cmd}")
+    if len(poly) > 1:
+        polys.append(poly)
+    return polys
+
+def _in_poly(x, y, poly):
+    inside = False
+    j = len(poly) - 1
+    for i, (xi, yi) in enumerate(poly):
+        xj, yj = poly[j]
+        if (yi > y) != (yj > y) and x < (xj - xi) * (y - yi) / ((yj - yi) or 1e-12) + xi:
+            inside = not inside
+        j = i
+    return inside
+
+def _in_round_rect(x, y, w, h, r):
+    if x < 0 or y < 0 or x > w or y > h:
+        return False
+    if r <= 0:
+        return True
+    cx = min(max(x, r), w - r)
+    cy = min(max(y, r), h - r)
+    return (x - cx) ** 2 + (y - cy) ** 2 <= r * r + 1e-6
+
+def _parse_favicon_svg(path):
+    text = open(path, encoding="utf-8").read()
+    vb = [float(n) for n in re.search(r'viewBox="([^"]+)"', text).group(1).split()]
+    _, _, vw, vh = vb
+    rect_m = re.search(r"<rect\b([^>]*)/?>", text)
+    if not rect_m:
+        raise ValueError(f"{path} has no <rect>")
+    rect = dict(re.findall(r'([\w:-]+)="([^"]*)"', rect_m.group(1)))
+    paths = []
+    for m in re.finditer(r"<path\b([^>]*)/?>", text):
+        attrs = dict(re.findall(r'([\w:-]+)="([^"]*)"', m.group(1)))
+        paths.append((_path_polygons(attrs["d"]), _hex_rgb(attrs.get("fill", "#fff"))))
+    shape = {
+        "vw": vw, "vh": vh,
+        "rw": float(rect.get("width", vw)), "rh": float(rect.get("height", vh)),
+        "rx": float(rect.get("rx", 0)), "fill": _hex_rgb(rect.get("fill", "#000")),
+        "paths": paths,
+    }
+    return shape
+
+def _rasterize(shape, size, supersample=6, opaque=False):
+    """Straight-alpha raster of the favicon mark. opaque flattens onto the tile colour (apple-touch)."""
+    vw, vh = shape["vw"], shape["vh"]
+    bg = shape["fill"]
+    buf = bytearray(size * size * 4)
+    n = supersample * supersample
+    for y in range(size):
+        for x in range(size):
+            acc = [0, 0, 0]
+            inside = 0
+            for sy in range(supersample):
+                for sx in range(supersample):
+                    px = (x + (sx + 0.5) / supersample) / size * vw
+                    py = (y + (sy + 0.5) / supersample) / size * vh
+                    if not _in_round_rect(px, py, shape["rw"], shape["rh"], shape["rx"]):
+                        continue
+                    col = bg
+                    for polys, fill in shape["paths"]:
+                        if any(_in_poly(px, py, poly) for poly in polys):
+                            col = fill
+                            break
+                    inside += 1
+                    for c in range(3):
+                        acc[c] += col[c]
+            o = (y * size + x) * 4
+            if inside == 0:
+                if opaque:
+                    buf[o:o + 4] = bytes((*bg, 255))
+                continue
+            src = [acc[c] / inside for c in range(3)]
+            cover = inside / n
+            if opaque:
+                rgb = [int(round(src[c] * cover + bg[c] * (1 - cover))) for c in range(3)]
+                buf[o:o + 4] = bytes((*rgb, 255))
+            else:
+                rgb = [int(round(src[c])) for c in range(3)]
+                buf[o:o + 4] = bytes((*rgb, int(round(cover * 255))))
+    return buf
+
+def _png_bytes(buf, size):
+    raw = b"".join(b"\x00" + bytes(buf[y * size * 4:(y + 1) * size * 4]) for y in range(size))
+    def chunk(tag, data):
+        return struct.pack(">I", len(data)) + tag + data + struct.pack(">I", zlib.crc32(tag + data) & 0xFFFFFFFF)
+    ihdr = struct.pack(">IIBBBBB", size, size, 8, 6, 0, 0, 0)
+    return b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", ihdr) + chunk(b"IDAT", zlib.compress(raw, 9)) + chunk(b"IEND", b"")
+
+def _write_ico(path, pngs):
+    count = len(pngs)
+    header = struct.pack("<HHH", 0, 1, count)
+    offset = 6 + 16 * count
+    entries = b""
+    blob = b""
+    for size, data in pngs:
+        entries += struct.pack("<BBBBHHII", size if size < 256 else 0, size if size < 256 else 0, 0, 0, 1, 32, len(data), offset)
+        blob += data
+        offset += len(data)
+    with open(path, "wb") as f:
+        f.write(header + entries + blob)
+
+def _sample(buf, size, vx, vy, vw=34.0):
+    x = min(size - 1, max(0, int(vx / vw * size)))
+    y = min(size - 1, max(0, int(vy / vw * size)))
+    i = (y * size + x) * 4
+    return tuple(buf[i:i + 4])
+
+def write_icons():
+    """Rasterize assets/favicon.svg to /favicon.ico (16/32/48) and /apple-touch-icon.png (180)."""
+    src = os.path.join(ROOT, "assets", "favicon.svg")
+    shape = _parse_favicon_svg(src)
+    ico = []
+    for size in (16, 32, 48):
+        buf = _rasterize(shape, size, supersample=8 if size <= 32 else 6, opaque=False)
+        ico.append((size, _png_bytes(buf, size)))
+    check = _rasterize(shape, 48, supersample=6, opaque=False)
+    bar, gap, corner = _sample(check, 48, 17, 12), _sample(check, 48, 17, 15), _sample(check, 48, 0.4, 0.4)
+    if bar[0] < 200 or gap[0] < 180 or gap[1] > 140 or corner[3] > 30:
+        raise RuntimeError(f"favicon.svg raster does not match the mark (bar={bar}, gap={gap}, corner={corner})")
+    _write_ico(os.path.join(OUT, "favicon.ico"), ico)
+    touch = _rasterize(shape, 180, supersample=4, opaque=True)
+    tbar, tcorner = _sample(touch, 180, 17, 12), _sample(touch, 180, 0.4, 0.4)
+    if tbar[0] < 200 or tcorner[3] != 255 or tcorner[0] < 180:
+        raise RuntimeError(f"apple-touch-icon raster failed (bar={tbar}, corner={tcorner})")
+    with open(os.path.join(OUT, "apple-touch-icon.png"), "wb") as f:
+        f.write(_png_bytes(touch, 180))
 
 # ---------------------------------------------------------------- machine-readable files
 def build_txt():
@@ -567,8 +795,8 @@ def build_txt():
     F += ["## General FAQ"] + [f"- Q: {q}\n  A: {a}" for q, a in GLOBAL_FAQ]
     open(os.path.join(OUT, "llms-full.txt"), "w", encoding="utf-8").write("\n".join(F) + "\n")
 
-    # favicon + simple logo png placeholder
-    open(os.path.join(OUT, "assets", "favicon.svg"), "w").write(LOGO_SVG.replace('aria-hidden="true"', 'xmlns="http://www.w3.org/2000/svg"'))
+    # favicon.ico (site root) + apple-touch-icon.png, rasterized from assets/favicon.svg
+    write_icons()
     try:
         from PIL import Image, ImageDraw
         im = Image.new("RGB", (512, 512), "#e4572e"); d = ImageDraw.Draw(im)

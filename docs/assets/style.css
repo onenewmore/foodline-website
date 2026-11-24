@@ -146,8 +146,11 @@ form.inq input,form.inq select,form.inq textarea{font:inherit;padding:11px 12px;
 form.inq input:focus,form.inq select:focus,form.inq textarea:focus{outline:2px solid var(--accent);border-color:transparent}
 form.inq .hp{position:absolute;left:-9999px}
 form.inq small{color:#9fb0be}
+form.inq .hint{margin:0;font-size:.85rem;font-weight:600;color:#d7e2ea}
+form.inq input.is-invalid{border-color:#ffb4a2;outline:2px solid #ffb4a2}
 @media (max-width:620px){form.inq{grid-template-columns:1fr}.quote{padding:22px}}
-.form-msg{grid-column:1/-1;font-weight:700}
+.form-msg{grid-column:1/-1;font-weight:700;min-height:1.4em}
+.form-msg.is-error{color:#ffd0c4}
 
 /* footer */
 footer.site{background:var(--steel);color:#b8c4ce;padding:56px 0 24px;font-size:.92rem}
