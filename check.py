@@ -253,7 +253,7 @@ for dirpath, _, files in os.walk(DIST):
         if not f.endswith(".html"):
             continue
         p = os.path.join(dirpath, f)
-        rel = os.path.relpath(p, DIST)
+        rel = os.path.relpath(p, DIST).replace("\\", "/")
         s = open(p, encoding="utf-8").read()
         pages[rel] = s
         ld_faqs = []

@@ -118,6 +118,7 @@ def product_model_ld(p, full=False):
     path = "products/" + p["slug"] + "/"
     node = {"@type": "ProductModel", "@id": url(path) + "#product", "name": p["name"],
             "description": p["lead"], "sku": p["models"], "mpn": p["models"], "model": p["models"],
+            "material": p.get("material", "SUS304 stainless steel (SUS316L optional)"),
             "category": CAT[p["cat"]]["name"], "brand": {"@type": "Brand", "name": B},
             "manufacturer": {"@id": ORG_ID}, "url": url(path)}
     imgs = ([p["img"]] + list(p.get("gallery") or [])) if p.get("img") else []
@@ -126,7 +127,11 @@ def product_model_ld(p, full=False):
     if imgs:
         node["image"] = [url("assets/img/" + n + ".webp") for n in imgs]
     if full:
-        node["additionalProperty"] = [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["facts"]]
+        props = [{"@type": "PropertyValue", "name": k, "value": v} for k, v in p["facts"]]
+        if not any(k.lower() in ("material", "contact parts") for k, _ in p["facts"]):
+            props.append({"@type": "PropertyValue", "name": "Material", "value": p.get("material", "SUS304 / SUS316L stainless steel")})
+        props.append({"@type": "PropertyValue", "name": "Warranty", "value": "18-month machine warranty (wear parts excluded) with lifetime technical support"})
+        node["additionalProperty"] = props
     return node
 
 def model_list_item(p, i):
@@ -156,9 +161,34 @@ def faq_html(faqs):
 LOGO_SVG = '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="7" fill="#e4572e"/><path d="M9 10h16v4H9zM9 16h10v4H9zM9 22h16v4H9z" fill="#fff"/></svg>'
 WA_SVG = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C9 3 3.3 8.6 3.3 15.6c0 2.4.7 4.7 1.9 6.7L3 29l6.9-2.2c1.9 1 4 1.6 6.1 1.6 7 0 12.7-5.7 12.7-12.7S23 3 16 3zm0 23.1c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.1 1.3 1.3-4-.3-.4c-1.1-1.7-1.7-3.6-1.7-5.6C5.3 9.8 10.1 5 16 5s10.6 4.8 10.6 10.6S21.9 26.1 16 26.1zm5.8-7.9c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.6-.9-.8-1.6-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>'
 
+CORE_NAV_LINKS = [
+    ("All Packing Machines", "products"),
+    ("Vertical Form Fill Seal Machine", "products/vertical-form-fill-seal-packing-machine"),
+    ("Multi-function Vertical Snack Packer", "products/vffs-multihead-weigher-packing-machine"),
+    ("Full-auto Coffee Powder Sealing Machine", "products/auger-powder-vertical-packing-machine"),
+    ("Vertical Sachet Liquid Packaging Machine", "products/liquid-paste-vertical-packing-machine"),
+    ("Automated Pouch Packaging Equipment", "products/premade-pouch-packing-machine"),
+    ("Multi-Lane Stick Pack Machine", "products/multi-lane-stick-pack-machine"),
+    ("Multi-Lane 4-Side Seal Sachet Machine", "products/multi-lane-4-side-seal-powder-packing-machine"),
+    ("Single-Lane Sachet Powder Machine", "products/single-lane-sachet-powder-packing-machine"),
+    ("Horizontal Flow Wrap Machine", "products/horizontal-flow-wrap-machine"),
+    ("Liquid & Sauce Filling Capping Line", "products/liquid-filling-capping-line"),
+    ("Granule & Powder Jar Filling Line", "products/granule-jar-filling-line"),
+    ("Fully Automatic Granule Packaging Machine", "products/25kg-granule-bagging-line"),
+    ("Check Weigher Machine & Auxiliaries", "products/packing-machine-auxiliary-equipment"),
+]
+
 def header(pg, active=""):
     nav = [("Products", "products"), ("Applications", "applications"), ("About", "about"), ("Blog", "blog"), ("FAQ", "faq"), ("Contact", "contact")]
-    lis = "".join(f'<li><a href="{pg.rel(p)}"{" aria-current=\"page\"" if active == p else ""}>{n}</a></li>' for n, p in nav)
+    sub_lis = "".join(f'<li><a href="{pg.rel(target)}">{E(label)}</a></li>' for label, target in CORE_NAV_LINKS)
+    lis_parts = []
+    for n, p in nav:
+        cur = ' aria-current="page"' if active == p else ""
+        if p == "products":
+            lis_parts.append(f'<li class="has-sub"><a href="{pg.rel(p)}"{cur}>{n}</a><ul class="subnav" aria-label="Packing machine models">{sub_lis}</ul></li>')
+        else:
+            lis_parts.append(f'<li><a href="{pg.rel(p)}"{cur}>{n}</a></li>')
+    lis = "".join(lis_parts)
     return f'''<a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span>Factory-direct packing machines · Free sample testing</span>{f'<a href="mailto:{EMAIL}">{EMAIL}</a>' if EMAIL else ""}<a href="https://wa.me/{SITE["whatsapp"]}" rel="nofollow">WhatsApp {E(SITE["phone"])}</a></div></div>
 <header class="site"><div class="wrap">
@@ -169,13 +199,15 @@ def header(pg, active=""):
 
 def footer(pg, topic="your packing machine"):
     cats = "".join(f'<li><a href="{pg.rel("products/"+c["slug"])}">{E(c["short"])}</a></li>' for c in CATEGORIES)
+    machines = "".join(f'<li><a href="{pg.rel(target)}">{E(label)}</a></li>' for label, target in CORE_NAV_LINKS[1:])
     apps = "".join(f'<li><a href="{pg.rel("applications/"+a["slug"])}">{E(a["name"])}</a></li>' for a in APPLICATIONS)
     return f'''<footer class="site"><div class="wrap"><div class="fgrid">
 <div><a class="logo" href="{pg.rel("")}" style="color:#fff">{LOGO_SVG}<span>{E(B)}</span></a>
 <p style="margin-top:14px">{E(SITE["tagline"])} — powder, granule, liquid and solid product packing, from single machines to turnkey lines.</p>
 <address style="font-style:normal">{E(LEGAL)}<br>{E(SITE["address"])+"<br>" if has(SITE["address"]) else "China<br>"}
 {f'Email: <a href="mailto:{EMAIL}">{EMAIL}</a><br>' if EMAIL else ""}Tel / WhatsApp: <a href="tel:{SITE["phone"].replace(" ","")}">{E(SITE["phone"])}</a>{"<br>WeChat: "+E(SITE["wechat"]) if has(SITE["wechat"]) else ""}</address></div>
-<div><h3>Products</h3><ul>{cats}</ul></div>
+<div><h3>Categories</h3><ul><li><a href="{pg.rel("products")}">All Packing Machines</a></li>{cats}</ul></div>
+<div><h3>Core Machines</h3><ul>{machines}</ul></div>
 <div><h3>Applications</h3><ul>{apps}</ul></div>
 <div><h3>Company</h3><ul><li><a href="{pg.rel("about")}">About us</a></li><li><a href="{pg.rel("faq")}">FAQ</a></li><li><a href="{pg.rel("blog")}">Buying guides</a></li><li><a href="{pg.rel("contact")}">Contact &amp; quote</a></li><li><a href="{pg.rel("privacy-policy")}">Privacy policy</a></li><li><a href="{pg.rel("sitemap.xml")}">Sitemap</a></li></ul></div>
 </div><div class="legal"><span>© 2026 {E(LEGAL)}. All rights reserved.</span><span>Made in China · Exported worldwide</span></div></div></footer>
@@ -270,9 +302,9 @@ document.querySelectorAll('.thumbs button').forEach(function(b){b.addEventListen
 def layout(pg, title, desc, body, schema=None, active="", og_img="fl-cover", og_type="website", noindex=False, canonical=True):
     canon = url(pg.path + "/" if pg.path else "")
     parts = title.split(" | ")
-    while len(" | ".join(parts)) > 65 and len(parts) > 2:
+    while len(" | ".join(parts)) > 60 and len(parts) > 2:
         parts.pop(-2)                      # drop middle segment (e.g. model list) first
-    if len(" | ".join(parts)) > 65 and len(parts) == 2:
+    if len(" | ".join(parts)) > 60 and len(parts) == 2:
         parts = parts[:1]                  # then drop the brand suffix
     title = " | ".join(parts)
     ga = ""
@@ -337,19 +369,98 @@ def product_card(pg, p):
     return f'''<a class="card" href="{pg.rel("products/"+p["slug"])}"><div class="ph">{img_tag(pg, p["img"], p["name"])}</div>
 <div class="bd"><span class="tag">{E(CAT[p["cat"]]["short"])}</span><h3>{E(p["short"])}</h3><p>{E(p["lead"])}</p><span class="more">View specs →</span></div></a>'''
 
+HOME_CAT_LINKS = {
+    "multi-lane-sachet-stick-pack-machines": [
+        ("multi-lane 4-side seal powder sachet machine", "products/multi-lane-4-side-seal-powder-packing-machine"),
+        ("multi-lane stick pack machine", "products/multi-lane-stick-pack-machine"),
+        ("single-lane sachet machine", "products/single-lane-sachet-powder-packing-machine"),
+    ],
+    "vertical-form-fill-seal-machines": [
+        ("vertical form fill seal machine", "products/vertical-form-fill-seal-packing-machine"),
+        ("full-auto coffee powder sealing machine", "products/auger-powder-vertical-packing-machine"),
+        ("vertical sachet liquid packaging machine", "products/liquid-paste-vertical-packing-machine"),
+        ("multi-function vertical snack packer", "products/vffs-multihead-weigher-packing-machine"),
+    ],
+    "premade-pouch-packing-machines": [
+        ("automated pouch packaging equipment", "products/premade-pouch-packing-machine"),
+    ],
+    "flow-wrap-pillow-packing-machines": [
+        ("horizontal flow wrap machine", "products/horizontal-flow-wrap-machine"),
+    ],
+    "filling-capping-lines": [
+        ("liquid bottle filling and capping line", "products/liquid-filling-capping-line"),
+        ("granule & powder jar filling line", "products/granule-jar-filling-line"),
+    ],
+    "weighing-bagging-auxiliary-equipment": [
+        ("fully automatic granule packaging machine", "products/25kg-granule-bagging-line"),
+        ("check weigher machine", "products/packing-machine-auxiliary-equipment"),
+    ],
+}
+
+HOME_APP_LINKS = {
+    "powder-packing-solutions": [
+        ("full-auto coffee powder sealing machine", "products/auger-powder-vertical-packing-machine"),
+        ("multi-lane 4-side seal sachet machine", "products/multi-lane-4-side-seal-powder-packing-machine"),
+    ],
+    "snack-granule-packing-solutions": [
+        ("multi-function vertical snack packer", "products/vffs-multihead-weigher-packing-machine"),
+        ("vertical granule sealing equipment", "products/vertical-form-fill-seal-packing-machine"),
+    ],
+    "liquid-sauce-packing-solutions": [
+        ("vertical sachet liquid packaging machine", "products/liquid-paste-vertical-packing-machine"),
+        ("liquid filling and capping line", "products/liquid-filling-capping-line"),
+    ],
+    "bakery-candy-flow-wrap-solutions": [
+        ("horizontal flow wrap machine", "products/horizontal-flow-wrap-machine"),
+        ("check weigher machine", "products/packing-machine-auxiliary-equipment"),
+    ],
+    "frozen-food-packing-solutions": [
+        ("multi-function vertical snack packer", "products/vffs-multihead-weigher-packing-machine"),
+        ("vertical form fill seal machine", "products/vertical-form-fill-seal-packing-machine"),
+    ],
+    "coffee-milk-tea-stick-packing-solutions": [
+        ("multi-lane stick pack machine", "products/multi-lane-stick-pack-machine"),
+        ("automated pouch packaging equipment", "products/premade-pouch-packing-machine"),
+    ],
+    "spice-seasoning-powder-packing-solutions": [
+        ("single-lane sachet powder machine", "products/single-lane-sachet-powder-packing-machine"),
+        ("full-auto coffee powder sealing machine", "products/auger-powder-vertical-packing-machine"),
+    ],
+    "chips-snack-packing-solutions": [
+        ("multi-function vertical snack packer", "products/vffs-multihead-weigher-packing-machine"),
+        ("check weigher machine", "products/packing-machine-auxiliary-equipment"),
+    ],
+    "sugar-stick-sachet-packing-solutions": [
+        ("multi-lane stick pack machine", "products/multi-lane-stick-pack-machine"),
+        ("fully automatic granule packaging machine", "products/25kg-granule-bagging-line"),
+    ],
+}
+
+def _inline_links(pg, items):
+    return " · ".join(f'<a href="{pg.rel(target)}">{E(label)}</a>' for label, target in items)
+
 # ---------------------------------------------------------------- pages
 def build_home():
     pg = Page("")
-    cats = "".join(f'''<a class="card" href="{pg.rel("products/"+c["slug"])}"><div class="ph">{img_tag(pg, c["img"], c["name"])}</div>
-<div class="bd"><h3>{E(c["short"])}</h3><p>{E(c["summary"])}</p><span class="more">Explore →</span></div></a>''' for c in CATEGORIES)
-    apps = "".join(f'''<a class="card" href="{pg.rel("applications/"+a["slug"])}"><div class="bd"><h3>{E(a["name"])}</h3><p>{E(a["lead"])}</p><span class="more">See solutions →</span></div></a>''' for a in APPLICATIONS)
+    cats = "".join(f'''<article class="card"><a class="ph" href="{pg.rel("products/"+c["slug"])}">{img_tag(pg, c["img"], c["name"])}</a>
+<div class="bd"><h3><a href="{pg.rel("products/"+c["slug"])}">{E(c["short"])}</a></h3><p>{E(c["summary"])}</p><p class="card-links"><strong>Core models:</strong> {_inline_links(pg, HOME_CAT_LINKS[c["slug"]])}</p><a class="more" href="{pg.rel("products/"+c["slug"])}">Explore →</a></div></article>''' for c in CATEGORIES)
+    apps = "".join(f'''<article class="card"><div class="bd"><h3><a href="{pg.rel("applications/"+a["slug"])}">{E(a["name"])}</a></h3><p>{E(a["lead"])}</p><p class="card-links"><strong>Recommended:</strong> {_inline_links(pg, HOME_APP_LINKS[a["slug"]])}</p><a class="more" href="{pg.rel("applications/"+a["slug"])}">See solutions →</a></div></article>''' for a in APPLICATIONS)
+    featured_slugs = [
+        "vertical-form-fill-seal-packing-machine",
+        "auger-powder-vertical-packing-machine",
+        "liquid-paste-vertical-packing-machine",
+        "vffs-multihead-weigher-packing-machine",
+        "premade-pouch-packing-machine",
+        "packing-machine-auxiliary-equipment",
+    ]
+    featured_cards = "".join(product_card(pg, PROD[s]) for s in featured_slugs)
     v = PROD["multi-lane-4-side-seal-powder-packing-machine"]["video"]
     faqs = GLOBAL_FAQ[:5]
     body = f'''
 <section class="hero"><div class="wrap">
 <div><span class="eyebrow">Packing machine manufacturer · China</span>
 <h1>Automatic Packing Machines &amp; Turnkey Packaging Lines</h1>
-<p class="lead">{E(B)} builds sachet, stick-pack, vertical form fill seal (VFFS), premade-pouch, flow-wrap and bottle-filling machines for powder, granules, liquids and solid products — tested with your product before shipment.</p>
+<p class="lead">{E(B)} builds <a href="{pg.rel("products")}">automatic packing machines</a> and <a href="{pg.rel("products/vertical-form-fill-seal-packing-machine")}">vertical form fill seal system</a> lines — plus stick-pack, sachet, <a href="{pg.rel("products/premade-pouch-packing-machine")}">automated pouch packaging equipment</a>, flow-wrap and <a href="{pg.rel("products/packing-machine-auxiliary-equipment")}">check weigher machine</a> modules — tested with your product before shipment.</p>
 <div class="cta-row"><a class="btn btn-primary" href="#quote">Get a free quote in 24 h</a><a class="btn btn-ghost" href="{pg.rel("products")}">Browse machines</a></div>
 <ul class="ticks"><li>Free sample test with video</li><li>SUS304 / 316L food-grade build</li><li>Voltage built to your country</li><li>18-month warranty &amp; on-site installation</li></ul>
 </div>
@@ -362,18 +473,23 @@ def build_home():
 
 <section><div class="wrap">
 <span class="eyebrow">Product range</span><h2>Packing machines for every product and pack format</h2>
-<p class="muted prose">Choose by pack format: small sachets and sticks, bags made from roll film, premade pouches, flow-wrapped items, bottles and jars, or 25 kg bags.</p>
+<p class="muted prose">Choose by pack format: small sachets and sticks, bags made from roll film on a <a href="{pg.rel("products/vertical-form-fill-seal-packing-machine")}">vertical form fill seal machine</a>, premade pouches, flow-wrapped items, bottles and jars, or 25 kg bags.</p>
 <div class="grid g3" style="margin-top:28px">{cats}</div>
 </div></section>
 
-<section class="alt"><div class="wrap split">
+<section class="alt"><div class="wrap">
+<span class="eyebrow">Featured models</span><h2>Core automatic packing machines &amp; auxiliary equipment</h2>
+<div class="grid g3" style="margin-top:24px">{featured_cards}</div>
+</div></section>
+
+<section><div class="wrap split">
 <div><span class="eyebrow">See it running</span><h2>4-lane 4-side seal powder sachet machine</h2>
 <p>The FL-M500 packs powder into four lanes of flat four-side-sealed sachets at 25–40 cuts per lane per minute, with auger dosing, servo film pulling and film-break detection. Every machine is run-tested like this before it ships.</p>
 <a class="btn btn-primary" href="{pg.rel("products/multi-lane-4-side-seal-powder-packing-machine")}">View specifications</a></div>
 <div class="video-box"><video controls preload="none" playsinline poster="{pg.rel("assets/img/"+v["poster"]+".webp")}" width="1280" height="720"><source src="{pg.rel("assets/video/"+v["file"])}" type="video/mp4"></video></div>
 </div></section>
 
-<section><div class="wrap">
+<section class="alt"><div class="wrap">
 <span class="eyebrow">How we work</span><h2>From your sample to a running line</h2>
 <ol class="steps" style="margin-top:24px">
 <li><h3>Tell us your product</h3><p class="muted">Product, pack weight, speed, pack type and voltage.</p></li>
@@ -382,18 +498,18 @@ def build_home():
 <li><h3>Ship &amp; install</h3><p class="muted">Export packing, on-site or video installation, training and spare parts.</p></li>
 </ol></div></section>
 
-<section class="alt"><div class="wrap">
+<section><div class="wrap">
 <span class="eyebrow">Applications</span><h2>Solutions by industry</h2>
-<div class="grid g4" style="margin-top:24px">{apps}</div>
+<div class="grid g3" style="margin-top:24px">{apps}</div>
 </div></section>
 
-<section><div class="wrap prose">
+<section class="alt"><div class="wrap prose">
 <span class="eyebrow">FAQ</span><h2>Buying a packing machine — common questions</h2>
 {faq_html(faqs)}
 <p><a class="link" href="{pg.rel("faq")}">See all FAQs →</a></p>
 </div></section>
 
-<section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
+<section><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [{"@type": "WebSite", "@id": D + "/#website", "url": D + "/", "name": B, "publisher": {"@id": ORG_ID}, "inLanguage": "en"},
               faq_ld(faqs)]
     write(pg, layout(pg, f"Automatic Packing Machine Manufacturer in China | {B}",
@@ -407,15 +523,22 @@ def build_products_hub():
         items = "".join(product_card(pg, p) for p in PRODUCTS if p["cat"] == c["slug"])
         blocks += f'''<section style="padding:36px 0"><div class="wrap"><h2><a href="{pg.rel("products/"+c["slug"])}" style="text-decoration:none">{E(c["name"])}</a></h2>
 <p class="muted prose">{E(c["summary"])}</p><div class="grid g3" style="margin-top:20px">{items}</div></div></section>'''
+    hub_faqs = [
+        ("Which automatic packing machine fits my bag format and product?", "Multi-lane machines pack 1–50 g sachets and stick packs at 20–40 cuts/lane/min; vertical form fill seal (VFFS) systems pack 30 g–5 kg+ bags from roll film; rotary premade-pouch machines handle zipper and stand-up doypacks; flow wrappers handle solid items; filling lines handle bottles and jars."),
+        ("What is the difference between a vertical form fill seal system and a premade pouch machine?", "A vertical form fill seal (VFFS) system forms bags directly from roll film for the lowest packaging cost per bag and speeds up to 70 bags/min. A premade pouch machine fills ready-made zipper, flat-bottom or spout pouches at 16–50 bags/min for retail shelf presentation."),
+        ("Are FOOD LINE packing machines built with SUS304/316L and covered by warranty?", "Yes. Food-contact parts are built in SUS304 stainless steel, with SUS316L optional for salty, acidic or corrosive products. Every machine is run-tested with your sample before shipment and backed by an 18-month warranty (wear parts excluded) plus lifetime technical support."),
+    ]
     body = crumbs_html(pg, [("Home", ""), ("Products", "products")]) + f'''
-<section style="padding-bottom:12px"><div class="wrap prose"><h1>Packing Machines</h1>
-<div class="answer"><p>{E(B)} supplies {len(PRODUCTS)} packing machine families in {len(CATEGORIES)} categories: multi-lane sachet and stick-pack machines, vertical form fill seal (VFFS) machines, premade-pouch machines, horizontal flow wrappers, bottle filling lines and 25 kg bagging lines with auxiliary equipment.</p></div></div></section>
-{blocks}<section><div class="wrap">{quote_form(pg)}</div></section>'''
+<section style="padding-bottom:12px"><div class="wrap prose"><h1>Automatic Packing Machines &amp; Vertical Form Fill Seal System</h1>
+<div class="answer"><p>{E(B)} manufactures {len(PRODUCTS)} automatic packing machines across {len(CATEGORIES)} equipment categories: multi-lane sachet and stick-pack machines, our <a href="{pg.rel("products/vertical-form-fill-seal-packing-machine")}">vertical form fill seal system</a>, <a href="{pg.rel("products/premade-pouch-packing-machine")}">automated pouch packaging equipment</a>, horizontal flow wrappers, bottle filling lines, 25 kg bagging lines and <a href="{pg.rel("products/packing-machine-auxiliary-equipment")}">check weigher machines</a>. Built in SUS304 / SUS316L with an 18-month warranty.</p></div></div></section>
+{blocks}<section class="alt" style="padding:36px 0"><div class="wrap prose"><h2>FAQ about our automatic packing machines</h2>{faq_html(hub_faqs)}</div></section>
+<section><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [crumbs_ld([("Home", ""), ("Products", "products/")]),
-              {"@type": "ItemList", "name": "Packing machines", "numberOfItems": len(PRODUCTS),
-               "itemListElement": [model_list_item(p, i) for i, p in enumerate(PRODUCTS)]}]
-    write(pg, layout(pg, f"Packing Machines: Sachet, VFFS, Pouch, Flow Wrap & Filling | {B}",
-          "Automatic packing machines: stick pack, sachet, VFFS, auger powder, liquid, premade pouch, flow wrap, bottle filling lines and 25 kg bagging.",
+              {"@type": "ItemList", "name": "Automatic Packing Machines & Vertical Form Fill Seal System", "numberOfItems": len(PRODUCTS),
+               "itemListElement": [model_list_item(p, i) for i, p in enumerate(PRODUCTS)]},
+              faq_ld(hub_faqs)]
+    write(pg, layout(pg, "Automatic Packing Machines & Vertical Form Fill Seal System",
+          "Explore FOOD LINE automatic packing machines & vertical form fill seal systems: VFFS, coffee powder, liquid sachet, granule, pouch & check weighers.",
           body, schema, active="products"))
 
 def build_category(c):
@@ -435,7 +558,7 @@ def build_category(c):
               {"@type": "CollectionPage", "name": c["name"], "description": c.get("meta") or c["summary"],
                "mainEntity": {"@type": "ItemList", "name": c["name"], "numberOfItems": len(items),
                               "itemListElement": [model_list_item(p, i) for i, p in enumerate(items)]}}]
-    write(pg, layout(pg, f"{c['name']} | {B}", c.get("meta") or c["summary"], body, schema, active="products", og_img=c["img"] or "fl-cover"))
+    write(pg, layout(pg, c.get("seo_title") or f"{c['name']} | {B}", c.get("meta") or c["summary"], body, schema, active="products", og_img=c["img"] or "fl-cover"))
 
 def spec_table(p):
     s = p.get("specs")
@@ -476,6 +599,8 @@ def build_product(p):
     rg = p.get("related_guide")
     if rg:
         guide_html = f'\n<p>See the <a href="{pg.rel("blog/"+rg["slug"])}">{E(rg["label"])}</a>.</p>'
+    extra_html = "".join(f"<h2>{E(h)}</h2>{html_c}" for h, html_c in p.get("extra_sections", []))
+    mat_txt = p.get("material", "SUS304 stainless steel (SUS316L optional)")
     body = crumbs_html(pg, trail) + f'''
 <div class="wrap"><div class="p-top">
 <div class="p-media"><div class="main">{main_img}</div>{thumbs}</div>
@@ -488,7 +613,9 @@ def build_product(p):
 <div class="answer"><p><strong>At a glance:</strong> {E(answer)}</p></div>
 <h2>What it packs</h2><p>{E(p["applications"])}</p>
 <h2>Key features</h2><ul>{feats}</ul>
+{extra_html}
 {spec_table(p)}
+<p><strong>Material &amp; warranty:</strong> {E(mat_txt)} · 18-month machine warranty (wear parts excluded) with lifetime technical support.</p>
 {"<h2>Options &amp; configurations</h2><p>"+E(p["options"])+"</p>" if p["options"] else ""}{guide_html}
 {video}
 <h2>FAQ about the {E(p["short"])}</h2>{faq_html(p["faq"])}
@@ -506,7 +633,7 @@ def build_product(p):
         # Point at the complete VideoObject. A name-only VideoObject fails Google's
         # required thumbnailUrl and uploadDate checks.
         prod["subjectOf"] = {"@id": vid}
-    write(pg, layout(pg, f"{p['short']} | {p['models']} | {B}", p["meta"], body, schema, active="products", og_img=p["img"] or "fl-cover", og_type="product"))
+    write(pg, layout(pg, p.get("seo_title") or f"{p['short']} | {p['models']} | {B}", p["meta"], body, schema, active="products", og_img=p["img"] or "fl-cover", og_type="product"))
 
 def build_applications():
     pg = Page("applications")
@@ -606,6 +733,8 @@ def build_blog():
         else:
             lead = f'<div class="answer"><p><strong>Short answer:</strong> {E(a["summary"])}</p></div>'
         intro = ("\n" + a["intro"]) if a.get("intro") else ""
+        rec_slugs = a.get("recommended_products") or [p["slug"] for p in PRODUCTS[:3]]
+        rec_cards = "".join(product_card(pg, PROD[s]) for s in rec_slugs if s in PROD)
         body = crumbs_html(pg, [("Home", ""), ("Blog", "blog"), (a["title"], path)]) + f'''<article class="article"><section><div class="wrap prose">
 <span class="tag">Buying guide</span><h1>{E(a["title"])}</h1><p class="muted">By the {E(B)} engineering team · Updated <time datetime="{a["date"]}">{a["date"]}</time></p>
 {lead}{intro}
@@ -613,7 +742,8 @@ def build_blog():
 {secs}
 {("<h2>FAQ</h2>" + faq_html(a["faq"])) if a.get("faq") else ""}
 <p style="margin-top:32px"><a class="btn btn-primary" href="#quote">Ask an engineer</a></p></div></section></article>
-<section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
+<section class="alt" style="padding:40px 0"><div class="wrap"><h2>Recommended Packaging Machines</h2><p class="muted prose">Explore matching machines from our <a href="{pg.rel("products")}">automatic packing machines &amp; vertical form fill seal system</a> catalogue.</p><div class="grid g3" style="margin-top:20px">{rec_cards}</div></div></section>
+<section><div class="wrap">{quote_form(pg)}</div></section>'''
         schema = [crumbs_ld([("Home", ""), ("Blog", "blog/"), (a["title"], path + "/")]),
                   {"@type": "BlogPosting", "headline": a["title"], "description": a["meta"], "datePublished": a["date"], "dateModified": a["date"],
                    "author": {"@type": "Organization", "name": f"{B} engineering team", "url": D + "/about/"}, "publisher": {"@id": ORG_ID},
