@@ -434,6 +434,14 @@ HOME_APP_LINKS = {
         ("multi-lane stick pack machine", "products/multi-lane-stick-pack-machine"),
         ("fully automatic granule packaging machine", "products/25kg-granule-bagging-line"),
     ],
+    "protein-powder-packing-solutions": [
+        ("full-auto coffee powder sealing machine", "products/auger-powder-vertical-packing-machine"),
+        ("automated pouch packaging equipment", "products/premade-pouch-packing-machine"),
+    ],
+    "ketchup-sauce-sachet-packing-solutions": [
+        ("vertical sachet liquid packaging machine", "products/liquid-paste-vertical-packing-machine"),
+        ("liquid filling and capping line", "products/liquid-filling-capping-line"),
+    ],
 }
 
 def _inline_links(pg, items):
@@ -444,7 +452,7 @@ def build_home():
     pg = Page("")
     cats = "".join(f'''<article class="card"><a class="ph" href="{pg.rel("products/"+c["slug"])}">{img_tag(pg, c["img"], c["name"])}</a>
 <div class="bd"><h3><a href="{pg.rel("products/"+c["slug"])}">{E(c["short"])}</a></h3><p>{E(c["summary"])}</p><p class="card-links"><strong>Core models:</strong> {_inline_links(pg, HOME_CAT_LINKS[c["slug"]])}</p><a class="more" href="{pg.rel("products/"+c["slug"])}">Explore →</a></div></article>''' for c in CATEGORIES)
-    apps = "".join(f'''<article class="card"><div class="bd"><h3><a href="{pg.rel("applications/"+a["slug"])}">{E(a["name"])}</a></h3><p>{E(a["lead"])}</p><p class="card-links"><strong>Recommended:</strong> {_inline_links(pg, HOME_APP_LINKS[a["slug"]])}</p><a class="more" href="{pg.rel("applications/"+a["slug"])}">See solutions →</a></div></article>''' for a in APPLICATIONS)
+    apps = "".join(f'''<article class="card"><div class="bd"><h3><a href="{pg.rel("applications/"+a["slug"])}">{E(a["name"])}</a></h3><p>{E(a["lead"])}</p><p class="card-links"><strong>Recommended:</strong> {_inline_links(pg, HOME_APP_LINKS.get(a["slug"], [(PROD[s]["short"].lower(), "products/" + s) for s in a["products"][:2]]))}</p><a class="more" href="{pg.rel("applications/"+a["slug"])}">See solutions →</a></div></article>''' for a in APPLICATIONS)
     featured_slugs = [
         "vertical-form-fill-seal-packing-machine",
         "auger-powder-vertical-packing-machine",
@@ -647,7 +655,7 @@ def build_applications():
     pg = Page("applications")
     cards = "".join(f'''<a class="card" href="{pg.rel("applications/"+a["slug"])}"><div class="ph">{img_tag(pg, a["img"], a["name"])}</div><div class="bd"><h3>{E(a["name"])}</h3><p>{E(a["lead"])}</p><span class="more">See solutions →</span></div></a>''' for a in APPLICATIONS)
     body = crumbs_html(pg, [("Home", ""), ("Applications", "applications")]) + f'''<section><div class="wrap"><h1>Packaging Solutions by Product</h1>
-<div class="answer prose"><p>Pick your product to see which packing machines, dosing systems and pack formats fit — powder, snacks and granules, liquids and sauces, bakery and candy, frozen food, coffee and milk tea, spices, chips and sugar.</p></div>
+<div class="answer prose"><p>Pick your product to see which packing machines, dosing systems and pack formats fit — powder, protein powder, snacks and granules, liquids, ketchup sachets and sauces, bakery and candy, frozen food, coffee and milk tea, spices, chips and sugar.</p></div>
 <div class="grid g4" style="margin-top:24px">{cards}</div></div></section><section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [crumbs_ld([("Home", ""), ("Applications", "applications/")]),
               {"@type": "ItemList", "name": "Packaging solutions by product", "numberOfItems": len(APPLICATIONS),
@@ -722,7 +730,7 @@ def post_sections(body):
     for horizontal scrolling, matching the older 'table' in html check for existing posts."""
     parts = []
     for h, c in body:
-        block = f'<div class="tbl">{c}</div>' if "<table" in c else c
+        block = re.sub(r"(<table\b.*?</table>)", r'<div class="tbl">\1</div>', c, flags=re.S) if '<div class="tbl">' not in c else c
         parts.append((f"<h2>{E(h)}</h2>" if h else "") + block)
     return "".join(parts)
 

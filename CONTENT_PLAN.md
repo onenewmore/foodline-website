@@ -5,11 +5,8 @@ Target keyword = the phrase the page should rank for; use it in the H1/name, met
 Only use specs that exist in `data.py`. When published, move the line to the log with date and URL.
 
 ## Backlog (priority order)
-- [ ] A · `protein-powder-packing-solutions` · "protein powder packing machine" · sticks, zipper pouches, cans (multi-lane stick, premade pouch, powder can line)
-- [ ] A · `ketchup-sauce-sachet-packing-solutions` · "ketchup sachet packing machine" · multi-lane liquid stick, liquid VFFS, spout pouch
 - [ ] G · `10-head-vs-14-head-multihead-weigher` · "10 head vs 14 head multihead weigher" · 10- vs 14-head choice is already covered in /blog/multi-head-weigher-packaging-system/; publish a separate page only if a shorter comparison is still wanted
 - [ ] A · `nuts-dried-fruit-packing-solutions` · "nuts packing machine" · weigher + VFFS, premade zipper pouch, jar line, nitrogen
-- [ ] G · `buying-packing-machine-from-china` · "buy packing machine from China" · inquiry → sample test → proforma → deposit → FAT video → shipping → installation (use confirmed terms only)
 - [ ] A · `honey-stick-packing-solutions` · "honey stick packing machine" · multi-lane liquid stick with pump, heated hopper
 - [ ] G · `3-side-vs-4-side-vs-back-seal-sachet` · "3 side seal vs 4 side seal sachet"
 - [ ] A · `rice-grain-beans-packing-solutions` · "rice packing machine 1kg 5kg 25kg" · linear weigher VFFS FL-V730/V900, 25 kg bagging line
@@ -48,3 +45,8 @@ Only use specs that exist in `data.py`. When published, move the line to the log
 | 2026-11-17 | G | /blog/auger-filler-vs-cup-filler/ ("auger filler vs volumetric cup filler"); blog posts now render FAQ + FAQPage schema |
 | 2026-11-24 | G | /blog/multi-head-weigher-packaging-system/ ("multi-head weigher packaging system") |
 | 2026-11-17 | Link/Meta | Sugar stick page + multi-lane stick guide → auger vs cup guide; chips page meta shortened to 157 chars |
+| 2026-11-28 | SEO | Product TDK/H1/H2, header/footer/home/blog internal links, unique spec tables &amp; Schema across all 20 `/products/` pages |
+| 2026-11-28 | SEO/Content | Expanded 2 thin categories, 5 thin applications, and added FAQs to 4 older blog posts |
+| 2026-11-28 | A | /applications/protein-powder-packing-solutions/ ("protein powder packing machine") |
+| 2026-11-28 | A | /applications/ketchup-sauce-sachet-packing-solutions/ ("ketchup sachet packing machine") |
+| 2026-11-28 | G | /blog/buying-packing-machine-from-china/ ("buy packing machine from China") |
