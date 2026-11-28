@@ -546,6 +546,11 @@ def build_category(c):
     items = [p for p in PRODUCTS if p["cat"] == c["slug"]]
     cards = "".join(product_card(pg, p) for p in items)
     rows = "".join(f'<tr><td><a href="{pg.rel("products/"+p["slug"])}">{E(p["short"])}</a></td><td>{E(p["models"])}</td>' + "".join(f"<td><span class=\"muted\">{E(k)}:</span> {E(v)}</td>" for k, v in p["facts"][:2]) + "</tr>" for p in items)
+    extra = ""
+    if c.get("sections") or c.get("faq"):
+        secs = post_sections(c.get("sections", []))
+        fq = ("<h2>FAQ</h2>" + faq_html(c["faq"])) if c.get("faq") else ""
+        extra = f'<section style="padding:36px 0"><div class="wrap prose">{secs}{fq}</div></section>'
     body = crumbs_html(pg, [("Home", ""), ("Products", "products"), (c["short"], "products/" + c["slug"])]) + f'''
 <section style="padding-bottom:24px"><div class="wrap split"><div><h1>{E(c["name"])}</h1>
 <div class="answer"><p>{E(c["summary"])}</p></div><p>{E(c["intro"])}</p>
@@ -553,11 +558,14 @@ def build_category(c):
 <div class="hero-img">{img_tag(pg, c["img"], c["name"], eager=True)}</div></div></section>
 <section class="alt" style="padding:40px 0"><div class="wrap"><h2>Models in this range</h2><div class="grid g3" style="margin-top:20px">{cards}</div>
 <h3 style="margin-top:36px">Quick comparison</h3><div class="tbl"><table><thead><tr><th>Machine</th><th>Models</th><th>Highlight</th><th>Highlight</th></tr></thead><tbody>{rows}</tbody></table></div></div></section>
-<section><div class="wrap">{quote_form(pg)}</div></section>'''
+{extra}
+<section style="padding-top:0"><div class="wrap">{quote_form(pg)}</div></section>'''
     schema = [crumbs_ld([("Home", ""), ("Products", "products/"), (c["short"], "products/" + c["slug"] + "/")]),
               {"@type": "CollectionPage", "name": c["name"], "description": c.get("meta") or c["summary"],
                "mainEntity": {"@type": "ItemList", "name": c["name"], "numberOfItems": len(items),
                               "itemListElement": [model_list_item(p, i) for i, p in enumerate(items)]}}]
+    if c.get("faq"):
+        schema.append(faq_ld(c["faq"]))
     write(pg, layout(pg, c.get("seo_title") or f"{c['name']} | {B}", c.get("meta") or c["summary"], body, schema, active="products", og_img=c["img"] or "fl-cover"))
 
 def spec_table(p):
@@ -653,7 +661,7 @@ def build_applications():
         cards = "".join(product_card(pg, PROD[s]) for s in a["products"])
         extra = ""
         if a.get("sections") or a.get("faq"):
-            secs = "".join(f"<h2>{E(h)}</h2>{c}" for h, c in a.get("sections", []))
+            secs = post_sections(a.get("sections", []))
             fq = ("<h2>FAQ</h2>" + faq_html(a["faq"])) if a.get("faq") else ""
             extra = f'<section style="padding:24px 0 48px"><div class="wrap prose">{secs}{fq}</div></section>'
         body = crumbs_html(pg, [("Home", ""), ("Applications", "applications"), (a["name"], path)]) + f'''
